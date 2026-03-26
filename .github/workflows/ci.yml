@@ -1,0 +1,92 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  typescript:
+    name: TypeScript (lint + type-check + test)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+          cache-dependency-path: packages/core/package-lock.json
+
+      - name: Install root deps
+        run: npm install
+
+      - name: Install core deps
+        working-directory: packages/core
+        run: npm install
+
+      - name: Type-check core
+        working-directory: packages/core
+        run: npx tsc --noEmit
+
+      - name: Test core
+        working-directory: packages/core
+        run: npx vitest run
+
+      - name: Build core
+        working-directory: packages/core
+        run: npx tsc
+
+      - name: Install react deps
+        working-directory: packages/react
+        run: npm install
+
+      - name: Type-check react
+        working-directory: packages/react
+        run: npx tsc --noEmit
+
+      - name: Validate data
+        run: npm run validate
+
+  python:
+    name: Python (pytest)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install uv
+        run: pip install uv
+
+      - name: Install package
+        working-directory: python
+        run: |
+          uv venv
+          source .venv/bin/activate
+          uv pip install -e ".[dev]"
+
+      - name: Run tests
+        working-directory: python
+        run: |
+          source .venv/bin/activate
+          pytest tests/ -v
+
+  r-check:
+    name: R CMD check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "release"
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          working-directory: r
+          extra-packages: any::rcmdcheck
+      - name: Generate data
+        run: Rscript r/data-raw/generate.R
+      - uses: r-lib/actions/check-r-package@v2
+        with:
+          working-directory: r
