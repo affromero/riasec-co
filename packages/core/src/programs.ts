@@ -76,6 +76,7 @@ export function loadPrograms(): Program[] {
     }
 
     programs.push({
+      codigo_institucion_padre: row.codigo_institucion_padre,
       codigo_snies: parseInt(row.codigo_snies, 10),
       nombre_programa: row.nombre_programa,
       codigo_institucion: row.codigo_institucion,
@@ -88,6 +89,7 @@ export function loadPrograms(): Program[] {
       nivel_formacion: row.nivel_formacion,
       modalidad: row.modalidad,
       titulo_otorgado: row.titulo_otorgado,
+      reconocimiento: row.reconocimiento || null,
       cine_amplio: row.cine_amplio,
       cine_especifico: row.cine_especifico,
       cine_detallado: row.cine_detallado,
@@ -98,8 +100,12 @@ export function loadPrograms(): Program[] {
       creditos: row.creditos ? parseInt(row.creditos, 10) : null,
       periodos_duracion: row.periodos_duracion ? parseInt(row.periodos_duracion, 10) : null,
       periodicidad: row.periodicidad || null,
+      periodicidad_admisiones: row.periodicidad_admisiones || null,
       costo_matricula: row.costo_matricula ? parseFloat(row.costo_matricula) : null,
       en_convenio: row.en_convenio || null,
+      vigencia_anos: row.vigencia_anos || null,
+      ciclos_propedeuticos: row.ciclos_propedeuticos || null,
+      fecha_registro_snies: row.fecha_registro_snies || null,
     });
   }
 

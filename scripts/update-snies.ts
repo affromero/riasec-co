@@ -2,7 +2,10 @@
  * update-snies.ts
  *
  * Parses the SNIES HECAA Excel export (.data-raw/programas-export.xlsx)
- * and outputs canonical CSV to data/canonical/programs.csv.
+ * and outputs canonical CSVs:
+ *   - data/canonical/programs.csv      (main program catalog)
+ *   - data/canonical/cobertura.csv     (per-municipality coverage + tuition)
+ *   - data/canonical/convenios.csv     (inter-institutional agreements)
  *
  * Usage: npm run update-snies
  */
@@ -15,10 +18,14 @@ import * as XLSX from "xlsx";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
 const INPUT = resolve(ROOT, ".data-raw/programas-export.xlsx");
-const OUTPUT = resolve(ROOT, "data/canonical/programs.csv");
+const OUTPUT_DIR = resolve(ROOT, "data/canonical");
+const OUTPUT_PROGRAMS = resolve(OUTPUT_DIR, "programs.csv");
+const OUTPUT_COBERTURA = resolve(OUTPUT_DIR, "cobertura.csv");
+const OUTPUT_CONVENIOS = resolve(OUTPUT_DIR, "convenios.csv");
 
 // Column mapping: Excel header → canonical CSV column
 const COLUMN_MAP: Record<string, string> = {
+  CÓDIGO_INSTITUCIÓN_PADRE: "codigo_institucion_padre",
   CÓDIGO_SNIES_DEL_PROGRAMA: "codigo_snies",
   NOMBRE_DEL_PROGRAMA: "nombre_programa",
   CÓDIGO_INSTITUCIÓN: "codigo_institucion",
@@ -31,6 +38,7 @@ const COLUMN_MAP: Record<string, string> = {
   NIVEL_DE_FORMACIÓN: "nivel_formacion",
   MODALIDAD: "modalidad",
   TITULO_OTORGADO: "titulo_otorgado",
+  RECONOCIMIENTO_DEL_MINISTERIO: "reconocimiento",
   CINE_F_2013_AC_CAMPO_AMPLIO: "cine_amplio",
   CINE_F_2013_AC_CAMPO_ESPECÍFIC: "cine_especifico",
   CINE_F_2013_AC_CAMPO_DETALLADO: "cine_detallado",
@@ -41,8 +49,12 @@ const COLUMN_MAP: Record<string, string> = {
   NÚMERO_CRÉDITOS: "creditos",
   NÚMERO_PERIODOS_DE_DURACIÓN: "periodos_duracion",
   PERIODICIDAD: "periodicidad",
+  PERIODICIDAD_ADMISIONES: "periodicidad_admisiones",
   COSTO_MATRÍCULA_ESTUD_NUEVOS: "costo_matricula",
   PROGRAMA_EN_CONVENIO: "en_convenio",
+  VIGENCIA_AÑOS: "vigencia_anos",
+  "SE_OFRECE_POR_CICLOS_PROPEDÉUT": "ciclos_propedeuticos",
+  FECHA_DE_REGISTRO_EN_SNIES: "fecha_registro_snies",
 };
 
 const CANONICAL_COLUMNS = Object.values(COLUMN_MAP);
@@ -82,6 +94,19 @@ const INTEGER_COLUMNS = new Set([
   "creditos",
   "periodos_duracion",
 ]);
+const DATE_COLUMNS = new Set([
+  "fecha_registro_snies",
+]);
+
+function cleanDate(v: unknown): string {
+  if (v === null || v === undefined || v === "") return "";
+  if (v instanceof Date) return v.toISOString().split("T")[0];
+  const s = String(v).trim();
+  // Handle Excel serial dates or ISO strings
+  const d = new Date(s);
+  if (!isNaN(d.getTime())) return d.toISOString().split("T")[0];
+  return s;
+}
 
 function main() {
   console.log(`Reading ${INPUT}...`);
@@ -137,6 +162,8 @@ function main() {
         out[col] = cleanInteger(value);
       } else if (NUMERIC_COLUMNS.has(col)) {
         out[col] = cleanNumber(value);
+      } else if (DATE_COLUMNS.has(col)) {
+        out[col] = cleanDate(value);
       } else {
         out[col] = cleanString(value);
       }
@@ -184,8 +211,8 @@ function main() {
     console.log(`  ${count.toString().padStart(6)} ${dept}`);
   }
 
-  // Write CSV
-  mkdirSync(dirname(OUTPUT), { recursive: true });
+  // Write programs CSV
+  mkdirSync(OUTPUT_DIR, { recursive: true });
 
   const csvHeader = CANONICAL_COLUMNS.join(",");
   const csvRows = canonical.map((row) =>
@@ -193,10 +220,145 @@ function main() {
   );
 
   const csv = [csvHeader, ...csvRows].join("\n") + "\n";
-  writeFileSync(OUTPUT, csv, "utf-8");
+  writeFileSync(OUTPUT_PROGRAMS, csv, "utf-8");
 
   const sizeMB = (Buffer.byteLength(csv) / 1024 / 1024).toFixed(1);
-  console.log(`\nWrote ${OUTPUT} (${sizeMB} MB, ${canonical.length} rows)`);
+  console.log(`\nWrote ${OUTPUT_PROGRAMS} (${sizeMB} MB, ${canonical.length} rows)`);
+
+  // Count accreditation
+  const recCounts = new Map<string, number>();
+  for (const row of canonical.filter((r) => r.estado === "Activo")) {
+    const rec = row.reconocimiento || "(sin dato)";
+    recCounts.set(rec, (recCounts.get(rec) ?? 0) + 1);
+  }
+  console.log("\nAccreditation (active programs):");
+  for (const [rec, count] of [...recCounts.entries()].sort((a, b) => b[1] - a[1])) {
+    console.log(`  ${count.toString().padStart(6)} ${rec}`);
+  }
+
+  // --- Parse Cobertura sheet ---
+  parseCobertura(wb);
+
+  // --- Parse Cobertura convenios sheet ---
+  parseConvenios(wb);
+}
+
+const COBERTURA_COLUMNS = [
+  "codigo_snies",
+  "nombre_programa",
+  "tipo_cubrimiento",
+  "departamento",
+  "municipio",
+  "nombre_institucion",
+  "codigo_institucion",
+  "costo_matricula",
+];
+
+function parseCobertura(wb: XLSX.WorkBook) {
+  console.log("\n--- Parsing Cobertura sheet ---");
+  const sheet = wb.Sheets["Cobertura"];
+  if (!sheet) {
+    console.log("  Cobertura sheet not found, skipping");
+    return;
+  }
+
+  const rows = XLSX.utils.sheet_to_json<Record<string, unknown>>(sheet, { defval: null });
+  console.log(`  Raw rows: ${rows.length}`);
+
+  const COBERTURA_MAP: Record<string, string> = {
+    CÓDIGO_SNIES_DEL_PROGRAMA: "codigo_snies",
+    NOMBRE_DEL_PROGRAMA: "nombre_programa",
+    TIPO_CUBRIMIENTO: "tipo_cubrimiento",
+    DEPARTAMENTO: "departamento",
+    MUNICIPIO: "municipio",
+    NOMBRE_IES: "nombre_institucion",
+    CODIGO_IES: "codigo_institucion",
+    VALOR_MATRICULA: "costo_matricula",
+  };
+
+  const canonical: Record<string, string>[] = [];
+  for (const row of rows) {
+    const out: Record<string, string> = {};
+    for (const [excelCol, canonicalCol] of Object.entries(COBERTURA_MAP)) {
+      const value = row[excelCol];
+      if (canonicalCol === "codigo_snies" || canonicalCol === "costo_matricula") {
+        out[canonicalCol] = cleanNumber(value);
+      } else {
+        out[canonicalCol] = cleanString(value);
+      }
+    }
+    if (out.codigo_snies) canonical.push(out);
+  }
+
+  const csvHeader = COBERTURA_COLUMNS.join(",");
+  const csvRows = canonical.map((row) =>
+    COBERTURA_COLUMNS.map((col) => escapeCSV(row[col] ?? "")).join(",")
+  );
+  const csv = [csvHeader, ...csvRows].join("\n") + "\n";
+  writeFileSync(OUTPUT_COBERTURA, csv, "utf-8");
+
+  const sizeMB = (Buffer.byteLength(csv) / 1024 / 1024).toFixed(1);
+  console.log(`  Wrote ${OUTPUT_COBERTURA} (${sizeMB} MB, ${canonical.length} rows)`);
+
+  // Unique departments
+  const depts = new Set(canonical.map((r) => r.departamento).filter(Boolean));
+  console.log(`  Departments: ${depts.size}, Municipalities: ${new Set(canonical.map((r) => r.municipio).filter(Boolean)).size}`);
+}
+
+const CONVENIOS_COLUMNS = [
+  "codigo_snies",
+  "nombre_programa",
+  "tipo_cubrimiento",
+  "departamento",
+  "municipio",
+  "nombre_institucion",
+  "codigo_institucion",
+];
+
+function parseConvenios(wb: XLSX.WorkBook) {
+  console.log("\n--- Parsing Cobertura convenios sheet ---");
+  const sheet = wb.Sheets["Cobertura convenios"];
+  if (!sheet) {
+    console.log("  Cobertura convenios sheet not found, skipping");
+    return;
+  }
+
+  const rows = XLSX.utils.sheet_to_json<Record<string, unknown>>(sheet, { defval: null });
+  console.log(`  Raw rows: ${rows.length}`);
+
+  const CONVENIOS_MAP: Record<string, string> = {
+    CÓDIGO_SNIES_DEL_PROGRAMA: "codigo_snies",
+    NOMBRE_DEL_PROGRAMA: "nombre_programa",
+    TIPO_CUBRIMIENTO: "tipo_cubrimiento",
+    DEPARTAMENTO: "departamento",
+    MUNICIPIO: "municipio",
+    NOMBRE_IES: "nombre_institucion",
+    CODIGO_IES: "codigo_institucion",
+  };
+
+  const canonical: Record<string, string>[] = [];
+  for (const row of rows) {
+    const out: Record<string, string> = {};
+    for (const [excelCol, canonicalCol] of Object.entries(CONVENIOS_MAP)) {
+      const value = row[excelCol];
+      if (canonicalCol === "codigo_snies") {
+        out[canonicalCol] = cleanNumber(value);
+      } else {
+        out[canonicalCol] = cleanString(value);
+      }
+    }
+    if (out.codigo_snies) canonical.push(out);
+  }
+
+  const csvHeader = CONVENIOS_COLUMNS.join(",");
+  const csvRows = canonical.map((row) =>
+    CONVENIOS_COLUMNS.map((col) => escapeCSV(row[col] ?? "")).join(",")
+  );
+  const csv = [csvHeader, ...csvRows].join("\n") + "\n";
+  writeFileSync(OUTPUT_CONVENIOS, csv, "utf-8");
+
+  const sizeMB = (Buffer.byteLength(csv) / 1024 / 1024).toFixed(1);
+  console.log(`  Wrote ${OUTPUT_CONVENIOS} (${sizeMB} MB, ${canonical.length} rows)`);
 }
 
 main();

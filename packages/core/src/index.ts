@@ -35,6 +35,8 @@ export {
   type QuizConfig,
   type QuizProgress,
   type Program,
+  type Cobertura,
+  type Convenio,
   type FieldMapping,
   type TypeMapping,
   type RecommendConfig,

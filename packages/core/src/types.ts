@@ -65,6 +65,7 @@ export interface QuizProgress {
 
 /** A SNIES program record (canonical CSV row) */
 export interface Program {
+  codigo_institucion_padre: string;
   codigo_snies: number;
   nombre_programa: string;
   codigo_institucion: string;
@@ -77,6 +78,7 @@ export interface Program {
   nivel_formacion: string;
   modalidad: string;
   titulo_otorgado: string;
+  reconocimiento: string | null;
   cine_amplio: string;
   cine_especifico: string;
   cine_detallado: string;
@@ -87,8 +89,35 @@ export interface Program {
   creditos: number | null;
   periodos_duracion: number | null;
   periodicidad: string | null;
+  periodicidad_admisiones: string | null;
   costo_matricula: number | null;
   en_convenio: string | null;
+  vigencia_anos: string | null;
+  ciclos_propedeuticos: string | null;
+  fecha_registro_snies: string | null;
+}
+
+/** A coverage record (Cobertura sheet — per-municipality offering) */
+export interface Cobertura {
+  codigo_snies: number;
+  nombre_programa: string;
+  tipo_cubrimiento: string;
+  departamento: string;
+  municipio: string;
+  nombre_institucion: string;
+  codigo_institucion: string;
+  costo_matricula: number | null;
+}
+
+/** A convenio record (inter-institutional agreement) */
+export interface Convenio {
+  codigo_snies: number;
+  nombre_programa: string;
+  tipo_cubrimiento: string;
+  departamento: string;
+  municipio: string;
+  nombre_institucion: string;
+  codigo_institucion: string;
 }
 
 /** RIASEC → CINE field mapping entry */
