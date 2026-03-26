@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.data-raw/
+*.parquet
+.DS_Store
+.env
+.env.*
+coverage/
+.turbo/
+__pycache__/
+*.pyc
+*.egg-info/
+.venv/
+r/man/
+r/Meta/
+r/data/*.rda

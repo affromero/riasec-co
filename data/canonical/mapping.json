@@ -1,0 +1,67 @@
+{
+  "meta": {
+    "description": "Mapping from Holland RIASEC types to Colombian CINE F 2013 AC broad fields (campo amplio)",
+    "source": "Expert mapping based on Holland (1997) occupational classification and SNIES CINE taxonomy",
+    "note": "Field names match exact values in SNIES program catalog. Weights range 0-1: 1.0 = primary match, 0.5-0.7 = secondary match."
+  },
+  "mapping": {
+    "R": {
+      "name": "Realistic",
+      "name_es": "Realista",
+      "description": "Hands-on, practical, mechanical, physical activities",
+      "fields": [
+        { "cine_amplio": "Agropecuario, Silvicultura, Pesca y Veterinaria", "weight": 1.0 },
+        { "cine_amplio": "Ingeniería, Industria y Construcción", "weight": 1.0 },
+        { "cine_amplio": "Servicios", "weight": 0.5 }
+      ]
+    },
+    "I": {
+      "name": "Investigative",
+      "name_es": "Investigador",
+      "description": "Analytical, intellectual, scientific, explorative activities",
+      "fields": [
+        { "cine_amplio": "Ciencias Naturales, Matemáticas y Estadística", "weight": 1.0 },
+        { "cine_amplio": "Salud y Bienestar", "weight": 1.0 },
+        { "cine_amplio": "Tecnologías de la Información y la Comunicación (TIC)", "weight": 0.5 },
+        { "cine_amplio": "Ingeniería, Industria y Construcción", "weight": 0.5 }
+      ]
+    },
+    "A": {
+      "name": "Artistic",
+      "name_es": "Artístico",
+      "description": "Creative, original, independent, expressive activities",
+      "fields": [
+        { "cine_amplio": "Arte y Humanidades", "weight": 1.0 },
+        { "cine_amplio": "Ciencias Sociales, Periodismo e Información", "weight": 0.5 }
+      ]
+    },
+    "S": {
+      "name": "Social",
+      "name_es": "Social",
+      "description": "Helping, teaching, counseling, serving activities",
+      "fields": [
+        { "cine_amplio": "Educación", "weight": 1.0 },
+        { "cine_amplio": "Salud y Bienestar", "weight": 1.0 },
+        { "cine_amplio": "Ciencias Sociales, Periodismo e Información", "weight": 0.7 }
+      ]
+    },
+    "E": {
+      "name": "Enterprising",
+      "name_es": "Emprendedor",
+      "description": "Leading, persuading, managing, selling activities",
+      "fields": [
+        { "cine_amplio": "Administración de Empresas y Derecho", "weight": 1.0 },
+        { "cine_amplio": "Servicios", "weight": 0.5 }
+      ]
+    },
+    "C": {
+      "name": "Conventional",
+      "name_es": "Convencional",
+      "description": "Organizing, data processing, detail-oriented, systematic activities",
+      "fields": [
+        { "cine_amplio": "Tecnologías de la Información y la Comunicación (TIC)", "weight": 1.0 },
+        { "cine_amplio": "Administración de Empresas y Derecho", "weight": 0.7 }
+      ]
+    }
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "source": "International Personality Item Pool (ipip.ori.org)",
+    "scale": "IPIP Basic Interest Markers — Spanish adaptation",
+    "reference": "Armstrong, P. I., Allison, W., & Rounds, J. (2020). Alternate Forms Public Domain RIASEC Markers. Electronic Journal of Research in Educational Psychology.",
+    "license": "Public domain",
+    "response_scale": {
+      "1": "Muy impreciso",
+      "2": "Moderadamente impreciso",
+      "3": "Ni preciso ni impreciso",
+      "4": "Moderadamente preciso",
+      "5": "Muy preciso"
+    },
+    "types": {
+      "R": "Realista",
+      "I": "Investigador",
+      "A": "Artístico",
+      "S": "Social",
+      "E": "Emprendedor",
+      "C": "Convencional"
+    }
+  },
+  "items": [
+    { "id": "R1", "type": "R", "text": "Me gusta trabajar con las manos", "keyed": "+" },
+    { "id": "R2", "type": "R", "text": "Disfruto construir cosas", "keyed": "+" },
+    { "id": "R3", "type": "R", "text": "Me gusta arreglar y reparar máquinas", "keyed": "+" },
+    { "id": "R4", "type": "R", "text": "Disfruto trabajar al aire libre", "keyed": "+" },
+    { "id": "R5", "type": "R", "text": "Se me da bien fabricar y reparar objetos", "keyed": "+" },
+    { "id": "R6", "type": "R", "text": "Disfruto manejar equipos y maquinaria", "keyed": "+" },
+    { "id": "R7", "type": "R", "text": "Me gusta trabajar con herramientas", "keyed": "+" },
+    { "id": "R8", "type": "R", "text": "Disfruto el trabajo físico", "keyed": "+" },
+
+    { "id": "I1", "type": "I", "text": "Me gusta resolver problemas complejos", "keyed": "+" },
+    { "id": "I2", "type": "I", "text": "Me interesa la ciencia", "keyed": "+" },
+    { "id": "I3", "type": "I", "text": "Me gusta analizar las cosas", "keyed": "+" },
+    { "id": "I4", "type": "I", "text": "Disfruto investigar", "keyed": "+" },
+    { "id": "I5", "type": "I", "text": "Necesito entender las razones detrás de las cosas", "keyed": "+" },
+    { "id": "I6", "type": "I", "text": "Disfruto leer material desafiante", "keyed": "+" },
+    { "id": "I7", "type": "I", "text": "Me gusta descubrir cómo funcionan las cosas", "keyed": "+" },
+    { "id": "I8", "type": "I", "text": "Siento curiosidad por muchos temas diferentes", "keyed": "+" },
+
+    { "id": "A1", "type": "A", "text": "Me gusta dibujar o pintar", "keyed": "+" },
+    { "id": "A2", "type": "A", "text": "Disfruto actuar en obras de teatro", "keyed": "+" },
+    { "id": "A3", "type": "A", "text": "Me gusta escribir historias o poesía", "keyed": "+" },
+    { "id": "A4", "type": "A", "text": "Tengo una imaginación muy activa", "keyed": "+" },
+    { "id": "A5", "type": "A", "text": "Disfruto tocar instrumentos musicales", "keyed": "+" },
+    { "id": "A6", "type": "A", "text": "Me gusta crear obras de arte", "keyed": "+" },
+    { "id": "A7", "type": "A", "text": "Se me da bien expresarme de forma creativa", "keyed": "+" },
+    { "id": "A8", "type": "A", "text": "Me gusta diseñar cosas", "keyed": "+" },
+
+    { "id": "S1", "type": "S", "text": "Me gusta enseñar a otros", "keyed": "+" },
+    { "id": "S2", "type": "S", "text": "Se me da bien orientar a las personas", "keyed": "+" },
+    { "id": "S3", "type": "S", "text": "Disfruto ayudar a otros con sus problemas", "keyed": "+" },
+    { "id": "S4", "type": "S", "text": "Me interesa sanar y cuidar a las personas", "keyed": "+" },
+    { "id": "S5", "type": "S", "text": "Me gusta trabajar en equipo", "keyed": "+" },
+    { "id": "S6", "type": "S", "text": "Se me da bien hacer que la gente se sienta cómoda", "keyed": "+" },
+    { "id": "S7", "type": "S", "text": "Disfruto hacer trabajo voluntario por la comunidad", "keyed": "+" },
+    { "id": "S8", "type": "S", "text": "Se me da bien cooperar con los demás", "keyed": "+" },
+
+    { "id": "E1", "type": "E", "text": "Me gusta liderar a otros", "keyed": "+" },
+    { "id": "E2", "type": "E", "text": "Soy un líder nato", "keyed": "+" },
+    { "id": "E3", "type": "E", "text": "Me gusta vender cosas o promover ideas", "keyed": "+" },
+    { "id": "E4", "type": "E", "text": "Se me da bien persuadir a las personas", "keyed": "+" },
+    { "id": "E5", "type": "E", "text": "Me gusta tomar el mando de las cosas", "keyed": "+" },
+    { "id": "E6", "type": "E", "text": "Disfruto empezar nuevos proyectos o negocios", "keyed": "+" },
+    { "id": "E7", "type": "E", "text": "Se me da bien dirigir a las personas", "keyed": "+" },
+    { "id": "E8", "type": "E", "text": "Me gusta organizar eventos", "keyed": "+" },
+
+    { "id": "C1", "type": "C", "text": "Me gusta seguir un horario establecido", "keyed": "+" },
+    { "id": "C2", "type": "C", "text": "Se me da bien organizar cosas", "keyed": "+" },
+    { "id": "C3", "type": "C", "text": "Me gusta llevar registros detallados", "keyed": "+" },
+    { "id": "C4", "type": "C", "text": "Soy detallista", "keyed": "+" },
+    { "id": "C5", "type": "C", "text": "Me gusta trabajar con números y datos", "keyed": "+" },
+    { "id": "C6", "type": "C", "text": "Soy preciso en mi trabajo", "keyed": "+" },
+    { "id": "C7", "type": "C", "text": "Me gusta seguir procedimientos establecidos", "keyed": "+" },
+    { "id": "C8", "type": "C", "text": "Me gusta archivar y organizar información", "keyed": "+" }
+  ]
+}
