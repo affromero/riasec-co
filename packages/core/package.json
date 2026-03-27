@@ -1,5 +1,5 @@
 {
-  "name": "@riasec-co/core",
+  "name": "riasec-co",
   "version": "0.1.0",
   "description": "Bayesian adaptive RIASEC quiz engine with Colombian SNIES program data",
   "type": "module",

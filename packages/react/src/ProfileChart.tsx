@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { RIASEC_TYPES, type RIASECProfile, type RIASECType } from "@riasec-co/core";
+import { RIASEC_TYPES, type RIASECProfile, type RIASECType } from "riasec-co";
 
 interface ChartPoint {
   type: RIASECType;

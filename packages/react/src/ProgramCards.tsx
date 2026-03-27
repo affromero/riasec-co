@@ -1,4 +1,4 @@
-import type { Recommendation, RIASECType } from "@riasec-co/core";
+import type { Recommendation, RIASECType } from "riasec-co";
 
 const TYPE_LABELS_ES: Record<RIASECType, string> = {
   R: "Realista",

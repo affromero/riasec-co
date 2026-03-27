@@ -13,8 +13,8 @@ Initial release of `riasec-co` — the first open-source package combining vocat
 - **48 IPIP RIASEC items** in English and Spanish (public domain, from Liao, Armstrong & Rounds 2008).
 - **RIASEC→CINE field mapping**: 16 weighted associations mapping Holland types to Colombian CINE F 2013 AC broad fields.
 - **Program recommendation engine** with enrollment-weighted priors, regional boost, and virtual/distance boost.
-- **TypeScript package** (`@riasec-co/core`): zero-dependency engine for Node.js and browser.
-- **React components** (`@riasec-co/react`): QuizWidget, ProfileChart (SVG radar), ProgramCards.
+- **TypeScript package** (`riasec-co`): zero-dependency engine for Node.js and browser.
+- **React components** (`riasec-co-react`): QuizWidget, ProfileChart (SVG radar), ProgramCards.
 - **Python package** (`riasec-co`): Polars DataFrames, quiz engine, recommender, matplotlib plotting.
 - **R package** (`riasecco`): CRAN-ready with LazyData, quiz engine, recommender, bundled .rda datasets.
 - **Data pipeline**: `scripts/update-snies.ts` parses HECAA Excel exports into canonical CSV.

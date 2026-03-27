@@ -7,7 +7,7 @@
 Motor bayesiano adaptativo RIASEC con el catálogo completo SNIES de Colombia — 17.230 programas activos en 33 departamentos. Disponible para TypeScript, Python y R.
 
 [![CI](https://github.com/affromero/riasec-co/actions/workflows/ci.yml/badge.svg)](https://github.com/affromero/riasec-co/actions/workflows/ci.yml)
-[![npm](https://img.shields.io/npm/v/@riasec-co/core)](https://www.npmjs.com/package/@riasec-co/core)
+[![npm](https://img.shields.io/npm/v/riasec-co)](https://www.npmjs.com/package/riasec-co)
 [![PyPI](https://img.shields.io/pypi/v/riasec-co)](https://pypi.org/project/riasec-co/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-blue)](https://www.typescriptlang.org/)
 [![Python](https://img.shields.io/badge/Python-3.10+-3776ab)](https://www.python.org/)
@@ -90,7 +90,7 @@ Los tres paquetes comparten los mismos datos y producen los mismos resultados.
 ### TypeScript
 
 ```typescript
-import { createQuiz, loadPrograms, recommend } from '@riasec-co/core'
+import { createQuiz, loadPrograms, recommend } from 'riasec-co'
 
 // 1. Ejecutar cuestionario adaptativo
 const quiz = createQuiz({ language: 'es', mode: 'adaptive' })

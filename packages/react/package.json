@@ -1,5 +1,5 @@
 {
-  "name": "@riasec-co/react",
+  "name": "riasec-co-react",
   "version": "0.1.0",
   "description": "React components for RIASEC vocational guidance quiz",
   "type": "module",
@@ -32,7 +32,7 @@
     "react-dom": ">=18.0.0"
   },
   "dependencies": {
-    "@riasec-co/core": "file:../core"
+    "riasec-co": "file:../core"
   },
   "devDependencies": {
     "@types/react": "^19.0.0",

@@ -6,7 +6,7 @@ import {
   type QuizConfig,
   type RIASECProfile,
   type LikertResponse,
-} from "@riasec-co/core";
+} from "riasec-co";
 
 /** Likert scale labels by language */
 const LIKERT_LABELS = {
