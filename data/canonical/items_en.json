@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "source": "International Personality Item Pool (ipip.ori.org)",
+    "scale": "IPIP Basic Interest Markers",
+    "reference": "Liao, H.-Y., Armstrong, P. I., & Rounds, J. (2008). Development and initial validation of public domain Basic Interest Markers. Journal of Vocational Behavior, 73(1), 159-183.",
+    "license": "Public domain",
+    "response_scale": {
+      "1": "Very inaccurate",
+      "2": "Moderately inaccurate",
+      "3": "Neither accurate nor inaccurate",
+      "4": "Moderately accurate",
+      "5": "Very accurate"
+    },
+    "types": {
+      "R": "Realistic",
+      "I": "Investigative",
+      "A": "Artistic",
+      "S": "Social",
+      "E": "Enterprising",
+      "C": "Conventional"
+    }
+  },
+  "items": [
+    { "id": "R1", "type": "R", "text": "Like to work with my hands", "keyed": "+" },
+    { "id": "R2", "type": "R", "text": "Enjoy building things", "keyed": "+" },
+    { "id": "R3", "type": "R", "text": "Like to tinker with machines", "keyed": "+" },
+    { "id": "R4", "type": "R", "text": "Enjoy working outdoors", "keyed": "+" },
+    { "id": "R5", "type": "R", "text": "Am good at making and repairing things", "keyed": "+" },
+    { "id": "R6", "type": "R", "text": "Enjoy operating machines", "keyed": "+" },
+    { "id": "R7", "type": "R", "text": "Like to work with tools", "keyed": "+" },
+    { "id": "R8", "type": "R", "text": "Enjoy physical work", "keyed": "+" },
+
+    { "id": "I1", "type": "I", "text": "Like to solve complex problems", "keyed": "+" },
+    { "id": "I2", "type": "I", "text": "Am interested in science", "keyed": "+" },
+    { "id": "I3", "type": "I", "text": "Like to analyze things", "keyed": "+" },
+    { "id": "I4", "type": "I", "text": "Enjoy doing research", "keyed": "+" },
+    { "id": "I5", "type": "I", "text": "Need to understand the reasons behind things", "keyed": "+" },
+    { "id": "I6", "type": "I", "text": "Enjoy reading challenging material", "keyed": "+" },
+    { "id": "I7", "type": "I", "text": "Like to figure out how things work", "keyed": "+" },
+    { "id": "I8", "type": "I", "text": "Am curious about many different things", "keyed": "+" },
+
+    { "id": "A1", "type": "A", "text": "Like to draw or paint", "keyed": "+" },
+    { "id": "A2", "type": "A", "text": "Enjoy acting in plays", "keyed": "+" },
+    { "id": "A3", "type": "A", "text": "Like to write stories or poetry", "keyed": "+" },
+    { "id": "A4", "type": "A", "text": "Have a vivid imagination", "keyed": "+" },
+    { "id": "A5", "type": "A", "text": "Enjoy playing musical instruments", "keyed": "+" },
+    { "id": "A6", "type": "A", "text": "Like to create works of art", "keyed": "+" },
+    { "id": "A7", "type": "A", "text": "Am good at expressing myself creatively", "keyed": "+" },
+    { "id": "A8", "type": "A", "text": "Like to design things", "keyed": "+" },
+
+    { "id": "S1", "type": "S", "text": "Like to teach others", "keyed": "+" },
+    { "id": "S2", "type": "S", "text": "Am good at counseling people", "keyed": "+" },
+    { "id": "S3", "type": "S", "text": "Enjoy helping others with their problems", "keyed": "+" },
+    { "id": "S4", "type": "S", "text": "Am interested in healing people", "keyed": "+" },
+    { "id": "S5", "type": "S", "text": "Like to work as part of a team", "keyed": "+" },
+    { "id": "S6", "type": "S", "text": "Am good at making people feel at ease", "keyed": "+" },
+    { "id": "S7", "type": "S", "text": "Enjoy volunteering for community causes", "keyed": "+" },
+    { "id": "S8", "type": "S", "text": "Am good at cooperating with others", "keyed": "+" },
+
+    { "id": "E1", "type": "E", "text": "Like to lead others", "keyed": "+" },
+    { "id": "E2", "type": "E", "text": "Am a natural leader", "keyed": "+" },
+    { "id": "E3", "type": "E", "text": "Like to sell things or promote ideas", "keyed": "+" },
+    { "id": "E4", "type": "E", "text": "Am good at persuading people", "keyed": "+" },
+    { "id": "E5", "type": "E", "text": "Like to take charge of things", "keyed": "+" },
+    { "id": "E6", "type": "E", "text": "Enjoy starting new projects or businesses", "keyed": "+" },
+    { "id": "E7", "type": "E", "text": "Am good at managing people", "keyed": "+" },
+    { "id": "E8", "type": "E", "text": "Like to organize events", "keyed": "+" },
+
+    { "id": "C1", "type": "C", "text": "Like to follow a set schedule", "keyed": "+" },
+    { "id": "C2", "type": "C", "text": "Am good at organizing things", "keyed": "+" },
+    { "id": "C3", "type": "C", "text": "Like to keep detailed records", "keyed": "+" },
+    { "id": "C4", "type": "C", "text": "Am detail-oriented", "keyed": "+" },
+    { "id": "C5", "type": "C", "text": "Like to work with numbers and data", "keyed": "+" },
+    { "id": "C6", "type": "C", "text": "Am accurate in my work", "keyed": "+" },
+    { "id": "C7", "type": "C", "text": "Like to follow set procedures", "keyed": "+" },
+    { "id": "C8", "type": "C", "text": "Like to file and organize information", "keyed": "+" }
+  ]
+}

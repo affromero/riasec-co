@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/afromero/riasec-co/data/schema/programs.schema.json",
+  "title": "SNIES Program",
+  "description": "A higher education program from Colombia's SNIES registry",
+  "type": "object",
+  "required": [
+    "codigo_snies",
+    "nombre_programa",
+    "nombre_institucion",
+    "estado",
+    "nivel_formacion",
+    "modalidad",
+    "cine_amplio",
+    "departamento",
+    "municipio"
+  ],
+  "properties": {
+    "codigo_snies": {
+      "type": "integer",
+      "description": "SNIES program code (unique identifier)"
+    },
+    "nombre_programa": {
+      "type": "string",
+      "description": "Official program name"
+    },
+    "codigo_institucion": {
+      "type": "string",
+      "description": "Institution code"
+    },
+    "nombre_institucion": {
+      "type": "string",
+      "description": "Institution name"
+    },
+    "estado": {
+      "type": "string",
+      "enum": ["Activo", "Inactivo"],
+      "description": "Program status"
+    },
+    "estado_institucion": {
+      "type": "string",
+      "description": "Institution status"
+    },
+    "caracter_academico": {
+      "type": "string",
+      "description": "Academic character (e.g., Universidad, Institución Tecnológica)"
+    },
+    "sector": {
+      "type": "string",
+      "description": "Sector (Oficial or Privado)"
+    },
+    "nivel_academico": {
+      "type": "string",
+      "enum": ["Pregrado", "Posgrado"],
+      "description": "Academic level"
+    },
+    "nivel_formacion": {
+      "type": "string",
+      "description": "Education level (e.g., Universitario, Tecnológico, Maestría)"
+    },
+    "modalidad": {
+      "type": "string",
+      "description": "Modality (e.g., Presencial, Virtual, A distancia)"
+    },
+    "titulo_otorgado": {
+      "type": "string",
+      "description": "Degree title awarded"
+    },
+    "cine_amplio": {
+      "type": "string",
+      "description": "CINE F 2013 AC broad field"
+    },
+    "cine_especifico": {
+      "type": "string",
+      "description": "CINE F 2013 AC specific field"
+    },
+    "cine_detallado": {
+      "type": "string",
+      "description": "CINE F 2013 AC detailed field"
+    },
+    "area_conocimiento": {
+      "type": "string",
+      "description": "Knowledge area (Colombian classification)"
+    },
+    "nucleo_conocimiento": {
+      "type": "string",
+      "description": "Basic knowledge core (Colombian classification)"
+    },
+    "departamento": {
+      "type": "string",
+      "description": "Department where program is offered"
+    },
+    "municipio": {
+      "type": "string",
+      "description": "Municipality where program is offered"
+    },
+    "creditos": {
+      "type": ["integer", "null"],
+      "description": "Number of credits"
+    },
+    "periodos_duracion": {
+      "type": ["integer", "null"],
+      "description": "Duration in periods"
+    },
+    "periodicidad": {
+      "type": ["string", "null"],
+      "description": "Period type (e.g., Semestral, Anual)"
+    },
+    "costo_matricula": {
+      "type": ["number", "null"],
+      "description": "Tuition cost for new students (COP)"
+    },
+    "en_convenio": {
+      "type": ["string", "null"],
+      "description": "Whether offered via agreement"
+    }
+  }
+}

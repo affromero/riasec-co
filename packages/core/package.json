@@ -1,0 +1,47 @@
+{
+  "name": "@riasec-co/core",
+  "version": "0.1.0",
+  "description": "Bayesian adaptive RIASEC quiz engine with Colombian SNIES program data",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist/",
+    "../../data/canonical/"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "ci": "tsc --noEmit && vitest run"
+  },
+  "keywords": [
+    "riasec",
+    "holland",
+    "vocational",
+    "career",
+    "guidance",
+    "bayesian",
+    "snies",
+    "colombia",
+    "education"
+  ],
+  "author": "Andres Romero <me@afromero.co>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/afromero/riasec-co.git",
+    "directory": "packages/core"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "typescript": "^5.6.0",
+    "vitest": "^3.0.0"
+  }
+}

@@ -1,0 +1,28 @@
+Package: riasecco
+Type: Package
+Title: Bayesian RIASEC Vocational Guidance with Colombian SNIES Data
+Version: 0.1.0
+Authors@R: person("Andres", "Romero", email = "me@afromero.co",
+                   role = c("aut", "cre"))
+Author: Andres Romero [aut, cre]
+Maintainer: Andres Romero <me@afromero.co>
+Description: A Bayesian adaptive RIASEC quiz engine paired with
+    Colombia's SNIES (Sistema Nacional de Información de la Educación
+    Superior) program database. Provides the complete catalog of 17,230
+    active higher education programs, IPIP RIASEC item banks in English
+    and Spanish, and a recommendation engine with enrollment-weighted
+    priors. Designed for vocational guidance in underserved regions.
+License: MIT + file LICENSE
+URL: https://github.com/afromero/riasec-co
+BugReports: https://github.com/afromero/riasec-co/issues
+Encoding: UTF-8
+LazyData: true
+Depends: R (>= 4.1.0)
+Imports:
+    stats,
+    jsonlite
+Suggests:
+    testthat (>= 3.0.0),
+    ggplot2
+Config/testthat/edition: 3
+RoxygenNote: 7.3.2

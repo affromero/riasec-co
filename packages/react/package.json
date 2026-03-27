@@ -1,0 +1,43 @@
+{
+  "name": "@riasec-co/react",
+  "version": "0.1.0",
+  "description": "React components for RIASEC vocational guidance quiz",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "ci": "tsc --noEmit"
+  },
+  "keywords": [
+    "riasec",
+    "react",
+    "vocational",
+    "quiz",
+    "colombia"
+  ],
+  "author": "Andres Romero <me@afromero.co>",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "dependencies": {
+    "@riasec-co/core": "file:../core"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/node": "^22.0.0",
+    "react": "^19.0.0",
+    "typescript": "^5.6.0"
+  }
+}
