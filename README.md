@@ -42,12 +42,11 @@ Este es el **primer paquete que combina evaluación vocacional con datos naciona
 
 ### Perfil RIASEC adaptativo
 
-El motor bayesiano converge en el perfil del estudiante en ~12 preguntas. A la izquierda, el perfil resultante. A la derecha, cómo las probabilidades se estabilizan y la entropía cae con cada respuesta.
+El motor bayesiano converge en el perfil del estudiante en ~12 preguntas. Arriba, el perfil resultante. Abajo, cómo las probabilidades se estabilizan y la entropía cae con cada respuesta.
 
 <p align="center">
-  <img src="docs/assets/profile-radar.png" alt="Gráfico radar RIASEC" width="320">
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="docs/assets/adaptive-convergence.png" alt="Convergencia adaptativa" width="520">
+  <img src="docs/assets/profile-radar.png" alt="Gráfico radar RIASEC" width="520"><br>
+  <img src="docs/assets/adaptive-convergence.png" alt="Convergencia adaptativa" width="720">
 </p>
 
 ### 17.230 programas activos por campo CINE

@@ -105,6 +105,8 @@ def plot_radar_profile():
         ax.text(angle, r_offset, pct, ha="center", va="center",
                 fontsize=10, fontweight="bold", color=colors[i])
 
+    ax.set_title("Perfil RIASEC del estudiante", fontsize=14, fontweight="bold", pad=20)
+
     plt.tight_layout()
     fig.savefig(OUT / "profile-radar.png", dpi=150, bbox_inches="tight",
                 facecolor=BG, edgecolor="none")

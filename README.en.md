@@ -42,12 +42,11 @@ This is the **first package combining vocational assessment with national educat
 
 ### Adaptive RIASEC profile
 
-The Bayesian engine converges on a student's profile in ~12 questions. Left: the resulting profile. Right: how probabilities stabilize and entropy drops with each answer.
+The Bayesian engine converges on a student's profile in ~12 questions. Top: the resulting profile. Bottom: how probabilities stabilize and entropy drops with each answer.
 
 <p align="center">
-  <img src="docs/assets/profile-radar.png" alt="RIASEC radar chart" width="320">
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="docs/assets/adaptive-convergence.png" alt="Adaptive convergence" width="520">
+  <img src="docs/assets/profile-radar.png" alt="RIASEC radar chart" width="520"><br>
+  <img src="docs/assets/adaptive-convergence.png" alt="Adaptive convergence" width="720">
 </p>
 
 ### 17,230 active programs by CINE field
