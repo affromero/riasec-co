@@ -8,9 +8,7 @@ Bayesian adaptive RIASEC engine with Colombia's complete SNIES catalog — 17,23
 
 [![CI](https://github.com/affromero/riasec-co/actions/workflows/ci.yml/badge.svg)](https://github.com/affromero/riasec-co/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/riasec-co)](https://www.npmjs.com/package/riasec-co)
-[![npm downloads](https://img.shields.io/npm/dm/riasec-co)](https://www.npmjs.com/package/riasec-co)
 [![PyPI](https://img.shields.io/pypi/v/riasec-co)](https://pypi.org/project/riasec-co/)
-[![PyPI downloads](https://img.shields.io/pypi/dm/riasec-co)](https://pypi.org/project/riasec-co/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-blue)](https://www.typescriptlang.org/)
 [![Python](https://img.shields.io/badge/Python-3.10+-3776ab)](https://www.python.org/)
 [![R](https://img.shields.io/badge/R-4.1+-276dc3)](https://www.r-project.org/)
