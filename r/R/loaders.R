@@ -83,7 +83,7 @@ plot_profile <- function(profile, title = "Perfil RIASEC") {
               "Social", "Emprendedor", "Convencional")
   )
 
-  ggplot2::ggplot(df, ggplot2::aes(x = .data$type, y = .data$value, fill = .data$type)) +
+  ggplot2::ggplot(df, ggplot2::aes(x = df$type, y = df$value, fill = df$type)) +
     ggplot2::geom_col(show.legend = FALSE) +
     ggplot2::scale_fill_manual(values = c(
       R = "#e74c3c", I = "#3498db", A = "#9b59b6",

@@ -4,6 +4,8 @@ Title: Bayesian RIASEC Vocational Guidance with Colombian SNIES Data
 Version: 0.1.0
 Authors@R: person("Andres", "Romero", email = "me@afromero.co",
                    role = c("aut", "cre"))
+Author: Andres Romero [aut, cre]
+Maintainer: Andres Romero <me@afromero.co>
 Description: A Bayesian adaptive RIASEC quiz engine paired with
     Colombia's SNIES (Sistema Nacional de Información de la Educación
     Superior) program database. Provides the complete catalog of 17,230
@@ -21,9 +23,6 @@ Imports:
     jsonlite
 Suggests:
     testthat (>= 3.0.0),
-    knitr,
-    rmarkdown,
     ggplot2
-VignetteBuilder: knitr
 Config/testthat/edition: 3
 RoxygenNote: 7.3.2
