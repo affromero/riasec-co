@@ -2,9 +2,9 @@
 
 # riasec-co
 
-**The first open-source package combining vocational assessment with national education data.**
+**Connects each student's vocational profile with Colombia's 17,230 active SNIES programs.**
 
-Bayesian adaptive RIASEC engine with Colombia's complete SNIES catalog — 17,230 active programs across 33 departments. Available for TypeScript, Python, and R.
+Bayesian adaptive RIASEC engine with the complete SNIES catalog — 33 departments, 297 institutions. Available for TypeScript, Python, and R.
 
 [![CI](https://github.com/affromero/riasec-co/actions/workflows/ci.yml/badge.svg)](https://github.com/affromero/riasec-co/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/riasec-co)](https://www.npmjs.com/package/riasec-co)

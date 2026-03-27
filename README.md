@@ -2,9 +2,9 @@
 
 # riasec-co
 
-**El primer paquete de código abierto que combina evaluación vocacional con datos nacionales de educación superior.**
+**Conecta el perfil vocacional de cada estudiante con los 17.230 programas activos del SNIES colombiano.**
 
-Motor bayesiano adaptativo RIASEC con el catálogo completo SNIES de Colombia — 17.230 programas activos en 33 departamentos. Disponible para TypeScript, Python y R.
+Motor bayesiano adaptativo RIASEC con el catálogo completo del SNIES — 33 departamentos, 297 instituciones. Disponible para TypeScript, Python y R.
 
 [![CI](https://github.com/affromero/riasec-co/actions/workflows/ci.yml/badge.svg)](https://github.com/affromero/riasec-co/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/riasec-co)](https://www.npmjs.com/package/riasec-co)

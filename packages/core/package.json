@@ -13,7 +13,8 @@
   },
   "files": [
     "dist/",
-    "data/"
+    "data/",
+    "README.md"
   ],
   "scripts": {
     "prebuild": "rm -rf data && cp -r ../../data/canonical data",
