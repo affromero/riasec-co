@@ -170,71 +170,89 @@ def plot_cine_distribution():
 
 
 def plot_regional_comparison():
-    """Programs in San Jorge y La Mojana region vs national."""
+    """Show the access gap: programs per CINE field, region vs rest of country."""
+    import polars as pl
+
     df = Programs.active()
     region_depts = ["Sucre", "Córdoba", "Bolívar"]
 
-    region = df.filter(
-        df.get_column("departamento").is_in(region_depts)
-    )
-    national = df
+    region = df.filter(pl.col("departamento").is_in(region_depts))
+    rest = df.filter(~pl.col("departamento").is_in(region_depts))
 
-    # Count by nivel_formacion
-    niveles = ["Universitario", "Tecnológico", "Especialización universitaria",
-               "Maestría", "Formación técnica profesional", "Doctorado"]
-
-    region_counts = {}
-    national_counts = {}
-    for n in niveles:
-        region_counts[n] = len(region.filter(region.get_column("nivel_formacion") == n))
-        national_counts[n] = len(national.filter(national.get_column("nivel_formacion") == n))
-
-    # Normalize to percentages
-    region_total = sum(region_counts.values())
-    national_total = sum(national_counts.values())
-
-    short_niveles = {
-        "Universitario": "Universitario",
-        "Tecnológico": "Tecnológico",
-        "Especialización universitaria": "Especialización",
-        "Maestría": "Maestría",
-        "Formación técnica profesional": "Técnico\nprofesional",
-        "Doctorado": "Doctorado",
+    short = {
+        "Administración de Empresas y Derecho": "Administración\ny Derecho",
+        "Ingeniería, Industria y Construcción": "Ingeniería",
+        "Ciencias Sociales, Periodismo e Información": "Ciencias Sociales",
+        "Salud y Bienestar": "Salud",
+        "Arte y Humanidades": "Arte y Humanidades",
+        "Tecnologías de la Información y la Comunicación (TIC)": "TIC",
+        "Agropecuario, Silvicultura, Pesca y Veterinaria": "Agropecuario",
+        "Ciencias Naturales, Matemáticas y Estadística": "Ciencias Naturales",
+        "Educación": "Educación",
+        "Servicios": "Servicios",
     }
 
-    fig, ax = plt.subplots(figsize=(10, 5))
-    x = np.arange(len(niveles))
-    w = 0.35
+    # Get all fields, sorted by national count
+    nat_counts = (
+        rest.group_by("cine_amplio").len()
+        .sort("len", descending=True)
+    )
+    fields = [f for f in nat_counts.get_column("cine_amplio").to_list()
+              if f in short]
 
-    r_pcts = [region_counts[n] / region_total * 100 for n in niveles]
-    n_pcts = [national_counts[n] / national_total * 100 for n in niveles]
+    reg_map = dict(
+        region.group_by("cine_amplio").len()
+        .select("cine_amplio", "len").iter_rows()
+    )
+    rest_map = dict(
+        rest.group_by("cine_amplio").len()
+        .select("cine_amplio", "len").iter_rows()
+    )
 
-    bars1 = ax.bar(x - w/2, n_pcts, w, label=f"Nacional ({national_total:,})",
-                   color="#3498db", alpha=0.85, edgecolor="white")
-    bars2 = ax.bar(x + w/2, r_pcts, w,
-                   label=f"Sucre + Córdoba + Bolívar ({region_total:,})",
-                   color="#e74c3c", alpha=0.85, edgecolor="white")
+    labels = [short[f] for f in fields]
+    reg_vals = [reg_map.get(f, 0) for f in fields]
+    rest_vals = [rest_map.get(f, 0) for f in fields]
 
-    ax.set_xticks(x)
-    ax.set_xticklabels([short_niveles[n] for n in niveles], fontsize=10)
-    ax.set_ylabel("% de programas activos", fontsize=12)
-    ax.set_title("Distribución por nivel de formación: región vs. nacional",
-                 fontsize=14, fontweight="bold", pad=15)
-    ax.legend(fontsize=11, loc="upper right")
+    fig, ax = plt.subplots(figsize=(10, 5.5))
+    y = np.arange(len(fields))
+    h = 0.35
+
+    bars1 = ax.barh(y - h/2, rest_vals, h,
+                     label=f"Resto del país ({len(rest):,} programas)",
+                     color="#3498db", alpha=0.85, edgecolor="white")
+    bars2 = ax.barh(y + h/2, reg_vals, h,
+                     label=f"Sucre + Córdoba + Bolívar ({len(region):,} programas)",
+                     color="#e74c3c", alpha=0.85, edgecolor="white")
+
+    ax.set_yticks(y)
+    ax.set_yticklabels(labels, fontsize=10)
+    ax.invert_yaxis()
+    ax.set_xlabel("Programas activos", fontsize=12)
+    ax.xaxis.set_major_formatter(ticker.FuncFormatter(lambda x, p: f"{x:,.0f}"))
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
-    ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, p: f"{x:.0f}%"))
+
+    # Add count labels on regional bars
+    for bar, val in zip(bars2, reg_vals):
+        ax.text(val + 30, bar.get_y() + bar.get_height() / 2,
+                str(val), va="center", fontsize=9, color="#e74c3c", fontweight="bold")
+
+    ax.legend(fontsize=10, loc="lower right")
+    ax.set_title(
+        "Brecha de acceso: 3 departamentos, 3.5M de personas, 6% de los programas",
+        fontsize=13, fontweight="bold", pad=15
+    )
 
     plt.tight_layout()
     fig.savefig(OUT / "regional-comparison.png", dpi=150, bbox_inches="tight",
                 facecolor=BG, edgecolor="none")
     plt.close()
-    print(f"  regional-comparison.png — region: {region_total:,}, national: {national_total:,}")
-    return region_depts, region_total
+    print(f"  regional-comparison.png — region: {len(region):,}, rest: {len(rest):,}")
+    return region_depts, len(region)
 
 
 def plot_recommendations(profile, region_depts):
-    """Show top recommendations as a horizontal bar chart."""
+    """Show top recommendations as a styled table."""
     import polars as pl
 
     results = recommend(
@@ -246,49 +264,88 @@ def plot_recommendations(profile, region_depts):
         limit=10,
     )
 
-    names = results.get_column("nombre_programa").to_list()
-    scores = results.get_column("score").to_list()
-    institutions = results.get_column("nombre_institucion").to_list()
-    modalities = results.get_column("modalidad").to_list()
+    max_score = results.get_column("score").max()
 
-    # Shorten names
-    short_names = []
-    for n, inst in zip(names, institutions):
-        short_inst = inst[:35] + "..." if len(inst) > 38 else inst
-        label = f"{n}\n{short_inst}"
-        short_names.append(label)
+    # Build table data
+    rows_data = []
+    for i, row in enumerate(results.iter_rows(named=True)):
+        name = row["nombre_programa"].title()
+        if len(name) > 40:
+            name = name[:38] + "..."
+        inst = row["nombre_institucion"].title()
+        if len(inst) > 35:
+            inst = inst[:33] + "..."
+        dept = row["departamento"]
+        field = row["cine_amplio"]
+        # Shorten CINE field
+        field_short = {
+            "Ingeniería, Industria y Construcción": "Ingeniería",
+            "Administración de Empresas y Derecho": "Administración",
+            "Salud y Bienestar": "Salud",
+            "Tecnologías de la Información y la Comunicación (TIC)": "TIC",
+            "Ciencias Naturales, Matemáticas y Estadística": "Ciencias Nat.",
+            "Ciencias Sociales, Periodismo e Información": "Ciencias Soc.",
+            "Agropecuario, Silvicultura, Pesca y Veterinaria": "Agropecuario",
+            "Arte y Humanidades": "Arte",
+            "Educación": "Educación",
+            "Servicios": "Servicios",
+        }.get(field, field[:15])
+        mod = "Virtual" if row["modalidad"] in ("Virtual", "A distancia") else "Presencial"
+        pct = int(row["score"] / max_score * 100)
+        rows_data.append([f"{i+1}", name, inst, dept, field_short, mod, f"{pct}%"])
 
-    fig, ax = plt.subplots(figsize=(10, 6))
+    columns = ["#", "Programa", "Institución", "Depto.", "Campo", "Modalidad", "Match"]
+    col_widths = [0.03, 0.27, 0.24, 0.10, 0.12, 0.10, 0.07]
 
-    colors = ["#2ecc71" if m in ("Virtual", "A distancia") else "#3498db"
-              for m in modalities]
+    fig, ax = plt.subplots(figsize=(12, 5))
+    ax.axis("off")
 
-    bars = ax.barh(range(len(scores)), scores, color=colors,
-                   edgecolor="white", linewidth=0.5)
-    ax.set_yticks(range(len(short_names)))
-    ax.set_yticklabels(short_names, fontsize=9)
-    ax.invert_yaxis()
-    ax.set_xlabel("Puntaje de coincidencia", fontsize=12)
-    ax.spines["top"].set_visible(False)
-    ax.spines["right"].set_visible(False)
+    # Header
+    header_colors = ["#2c3e50"] * len(columns)
+    table = ax.table(
+        cellText=rows_data,
+        colLabels=columns,
+        colWidths=col_widths,
+        cellLoc="left",
+        loc="center",
+    )
+    table.auto_set_font_size(False)
+    table.set_fontsize(9.5)
+    table.scale(1, 1.6)
 
-    # Legend
-    from matplotlib.patches import Patch
-    legend_elements = [
-        Patch(facecolor="#3498db", label="Presencial"),
-        Patch(facecolor="#2ecc71", label="Virtual / A distancia"),
-    ]
-    ax.legend(handles=legend_elements, loc="lower right", fontsize=10)
+    # Style header
+    for j in range(len(columns)):
+        cell = table[0, j]
+        cell.set_facecolor("#2c3e50")
+        cell.set_text_props(color="white", fontweight="bold", fontsize=10)
+        cell.set_edgecolor("#1a252f")
 
-    ax.set_title("Top 10 programas recomendados — Sucre, Córdoba, Bolívar\n"
-                 "Perfil: Investigador + Realista | Peso matrícula: -0.3 | Boost virtual: 1.5×",
-                 fontsize=12, fontweight="bold", pad=15)
+    # Style data rows
+    for i in range(len(rows_data)):
+        bg = "#f8f9fa" if i % 2 == 0 else "white"
+        for j in range(len(columns)):
+            cell = table[i + 1, j]
+            cell.set_facecolor(bg)
+            cell.set_edgecolor("#e1e4e8")
+            # Color the match percentage
+            if j == len(columns) - 1:
+                cell.set_text_props(fontweight="bold", color="#27ae60")
+            # Color virtual/presencial
+            if j == len(columns) - 2:
+                mod_val = rows_data[i][j]
+                color = "#27ae60" if mod_val == "Virtual" else "#3498db"
+                cell.set_text_props(color=color, fontweight="bold")
+
+    ax.set_title(
+        "Recomendaciones para un estudiante Investigador + Realista en Sucre/Córdoba/Bolívar",
+        fontsize=12, fontweight="bold", pad=15, color=TEXT_COLOR
+    )
 
     plt.tight_layout()
     fig.savefig(OUT / "recommendations.png", dpi=150, bbox_inches="tight",
                 facecolor=BG, edgecolor="none")
     plt.close()
-    print(f"  recommendations.png — {len(scores)} programs")
+    print(f"  recommendations.png — {len(rows_data)} programs (table)")
 
 
 def plot_adaptive_convergence():

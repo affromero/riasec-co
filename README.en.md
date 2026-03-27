@@ -57,14 +57,15 @@ Enrollment-weighted priors downweight oversaturated fields (Administracion y Der
 ## Install
 
 ```bash
-# TypeScript / JavaScript
-npm install @riasec-co/core
-npm install @riasec-co/react  # React components (optional)
+# TypeScript / JavaScript — from GitHub
+npm install github:afromero/riasec-co#main --workspace=packages/core
 
-# Python
-uv add riasec-co              # or: pip install riasec-co
+# Python — from GitHub
+pip install "riasec-co @ git+https://github.com/afromero/riasec-co.git#subdirectory=python"
+```
 
-# R
+```r
+# R — from GitHub
 remotes::install_github("afromero/riasec-co", subdir = "r")
 ```
 

@@ -57,14 +57,15 @@ Los priors por matrícula penalizan campos sobresaturados (Administración y Der
 ## Instalar
 
 ```bash
-# TypeScript / JavaScript
-npm install @riasec-co/core
-npm install @riasec-co/react  # Componentes React (opcional)
+# TypeScript / JavaScript — desde GitHub
+npm install github:afromero/riasec-co#main --workspace=packages/core
 
-# Python
-uv add riasec-co              # o: pip install riasec-co
+# Python — desde GitHub
+pip install "riasec-co @ git+https://github.com/afromero/riasec-co.git#subdirectory=python"
+```
 
-# R
+```r
+# R — desde GitHub
 remotes::install_github("afromero/riasec-co", subdir = "r")
 ```
 
