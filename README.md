@@ -186,6 +186,16 @@ Nuestro motor es más inteligente: **empieza sin saber nada**, y con cada respue
 
 El resultado: en vez de 48 preguntas, típicamente bastan **~12** para obtener un perfil confiable. Para un estudiante respondiendo en el celular con datos limitados, eso es la diferencia entre terminar el test o abandonarlo.
 
+### El problema del bibliotecario
+
+Hay un ejemplo famoso en probabilidad (Kahneman & Tversky): *"Steve es tímido, ordenado, meticuloso y le apasiona el detalle. ¿Es más probable que sea bibliotecario o agricultor?"*
+
+La mayoría dice bibliotecario — la descripción encaja perfecto. Pero hay **20 veces más agricultores que bibliotecarios**. Cuando consideras esa tasa base, Steve probablemente es agricultor con gustos de bibliotecario.
+
+Esto es exactamente lo que hacen nuestros **priors por matrícula**. Sin ellos, un estudiante Emprendedor siempre recibiría Administración de Empresas — porque el perfil encaja y hay 5.887 programas. Pero igual que con Steve, el hecho de que hay tantos programas es justamente la razón para buscar alternativas. Con el prior bayesiano, el motor ajusta: "sí, Administración encaja, pero también encajan Logística, Comercio Internacional y Negocios Digitales — y esos campos tienen mucha menos competencia."
+
+El pensamiento bayesiano dice: no solo mires qué tan bien encaja la evidencia — mira también qué tan común es cada opción. Eso transforma una recomendación genérica en una recomendación útil.
+
 ### La versión técnica
 
 La mayoría de tests vocacionales en línea usan **puntuación simple**: suman tus respuestas por tipo y te dan el más alto. Esto tiene tres problemas fundamentales:

@@ -186,6 +186,16 @@ Our engine is smarter: it **starts knowing nothing**, and with each answer updat
 
 The result: instead of 48 questions, typically **~12** are enough for a confident profile. For a student answering on a phone with limited data, that's the difference between finishing the test and abandoning it.
 
+### The librarian problem
+
+There's a famous example in probability (Kahneman & Tversky): *"Steve is shy, orderly, meticulous, and has a passion for detail. Is he more likely to be a librarian or a farmer?"*
+
+Most people say librarian — the description fits perfectly. But there are **20 times more farmers than librarians**. When you factor in that base rate, Steve is probably a farmer with librarian-like traits.
+
+This is exactly what our **enrollment-weighted priors** do. Without them, an Enterprising student would always get Business Administration — because the profile fits and there are 5,887 programs. But just like with Steve, the fact that there are so many programs is precisely the reason to look for alternatives. With the Bayesian prior, the engine adjusts: "yes, Business fits, but so do Logistics, International Trade, and Digital Business — and those fields have much less competition."
+
+Bayesian thinking says: don't just look at how well the evidence fits — also look at how common each option is. That transforms a generic recommendation into a useful one.
+
 ### The technical version
 
 Most online vocational tests use **simple scoring**: they sum your responses by type and give you the highest. This has three fundamental problems:
