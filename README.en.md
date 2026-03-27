@@ -1,8 +1,22 @@
+<div align="center">
+
 # riasec-co
 
-**Bayesian adaptive RIASEC vocational guidance engine for Colombia.**
+**The first open-source package combining vocational assessment with national education data.**
+
+Bayesian adaptive RIASEC engine with Colombia's complete SNIES catalog — 17,230 active programs across 33 departments. Available for TypeScript, Python, and R.
+
+[![CI](https://github.com/affromero/riasec-co/actions/workflows/ci.yml/badge.svg)](https://github.com/affromero/riasec-co/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/@riasec-co/core)](https://www.npmjs.com/package/@riasec-co/core)
+[![PyPI](https://img.shields.io/pypi/v/riasec-co)](https://pypi.org/project/riasec-co/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-strict-blue)](https://www.typescriptlang.org/)
+[![Python](https://img.shields.io/badge/Python-3.10+-3776ab)](https://www.python.org/)
+[![R](https://img.shields.io/badge/R-4.1+-276dc3)](https://www.r-project.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 [Leer en español](README.md)
+
+</div>
 
 > **30,809** programs | **17,230** active | **297** institutions | **33** departments | **11** CINE fields
 

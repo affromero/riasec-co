@@ -1,8 +1,22 @@
+<div align="center">
+
 # riasec-co
 
-**Motor bayesiano adaptativo de orientación vocacional RIASEC para Colombia.**
+**El primer paquete de código abierto que combina evaluación vocacional con datos nacionales de educación superior.**
+
+Motor bayesiano adaptativo RIASEC con el catálogo completo SNIES de Colombia — 17.230 programas activos en 33 departamentos. Disponible para TypeScript, Python y R.
+
+[![CI](https://github.com/affromero/riasec-co/actions/workflows/ci.yml/badge.svg)](https://github.com/affromero/riasec-co/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/@riasec-co/core)](https://www.npmjs.com/package/@riasec-co/core)
+[![PyPI](https://img.shields.io/pypi/v/riasec-co)](https://pypi.org/project/riasec-co/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-strict-blue)](https://www.typescriptlang.org/)
+[![Python](https://img.shields.io/badge/Python-3.10+-3776ab)](https://www.python.org/)
+[![R](https://img.shields.io/badge/R-4.1+-276dc3)](https://www.r-project.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 [Read in English](README.en.md)
+
+</div>
 
 > **30.809** programas | **17.230** activos | **297** instituciones | **33** departamentos | **11** campos CINE
 
