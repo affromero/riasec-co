@@ -14,3 +14,4 @@ __pycache__/
 r/man/
 r/Meta/
 r/data/*.rda
+packages/core/data/
