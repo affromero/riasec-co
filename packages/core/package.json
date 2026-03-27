@@ -1,6 +1,6 @@
 {
   "name": "riasec-co",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Bayesian adaptive RIASEC quiz engine with Colombian SNIES program data",
   "type": "module",
   "main": "dist/index.js",
@@ -13,9 +13,10 @@
   },
   "files": [
     "dist/",
-    "../../data/canonical/"
+    "data/"
   ],
   "scripts": {
+    "prebuild": "rm -rf data && cp -r ../../data/canonical data",
     "build": "tsc",
     "test": "vitest run",
     "test:watch": "vitest",

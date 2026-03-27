@@ -11,19 +11,22 @@ import type { Item, ItemBank } from "./types.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-/** Path to the canonical data directory */
-const DATA_DIR = resolve(__dirname, "../../data/canonical");
-
-// Fallback: when running from packages/core/src, data is at repo root
-const DATA_DIR_ALT = resolve(__dirname, "../../../data/canonical");
+// When installed from npm: dist/ and data/ are siblings in the package root
+// When running from source: data/canonical/ is at the monorepo root
+const PATHS = [
+  resolve(__dirname, "../data"),
+  resolve(__dirname, "../../data/canonical"),
+  resolve(__dirname, "../../../data/canonical"),
+];
 
 function findDataDir(): string {
-  try {
-    readFileSync(resolve(DATA_DIR, "items_en.json"));
-    return DATA_DIR;
-  } catch {
-    return DATA_DIR_ALT;
+  for (const dir of PATHS) {
+    try {
+      readFileSync(resolve(dir, "items_en.json"));
+      return dir;
+    } catch { /* try next */ }
   }
+  throw new Error("riasec-co: Could not find data files. Ensure the package is installed correctly.");
 }
 
 let cachedEn: ItemBank | null = null;

@@ -11,16 +11,22 @@ import type { Program, TypeMapping, RIASECType } from "./types.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const DATA_DIR = resolve(__dirname, "../../data/canonical");
-const DATA_DIR_ALT = resolve(__dirname, "../../../data/canonical");
+// When installed from npm: dist/ and data/ are siblings in the package root
+// When running from source: data/canonical/ is at the monorepo root
+const PATHS = [
+  resolve(__dirname, "../data"),           // npm installed: dist/../data
+  resolve(__dirname, "../../data/canonical"), // monorepo: packages/core/dist -> data/canonical
+  resolve(__dirname, "../../../data/canonical"), // monorepo: packages/core/src -> data/canonical
+];
 
 function findDataDir(): string {
-  try {
-    readFileSync(resolve(DATA_DIR, "programs.csv"), { encoding: "utf-8", flag: "r" });
-    return DATA_DIR;
-  } catch {
-    return DATA_DIR_ALT;
+  for (const dir of PATHS) {
+    try {
+      readFileSync(resolve(dir, "programs.csv"), { encoding: "utf-8", flag: "r" });
+      return dir;
+    } catch { /* try next */ }
   }
+  throw new Error("riasec-co: Could not find data files. Ensure the package is installed correctly.");
 }
 
 let cachedPrograms: Program[] | null = null;
