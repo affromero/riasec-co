@@ -26,44 +26,31 @@ Este es el **primer paquete que combina evaluación vocacional con datos naciona
 
 ## De un Vistazo
 
-<table>
-<tr>
-<td width="50%">
+### Perfil RIASEC adaptativo
 
-### Perfil Adaptativo del Cuestionario
+El motor bayesiano converge en el perfil del estudiante en ~12 preguntas. A la izquierda, el perfil resultante. A la derecha, cómo las probabilidades se estabilizan y la entropía cae con cada respuesta.
 
-El motor bayesiano converge en el perfil RIASEC del estudiante en ~12 preguntas usando parada basada en entropía.
+<p align="center">
+  <img src="docs/assets/profile-radar.png" alt="Gráfico radar RIASEC" width="320">
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="docs/assets/adaptive-convergence.png" alt="Convergencia adaptativa" width="520">
+</p>
 
-<img src="docs/assets/profile-radar.png" alt="Gráfico radar RIASEC" width="100%">
+### 17.230 programas activos por campo CINE
 
-</td>
-<td width="50%">
+![Distribución por campo CINE](docs/assets/cine-distribution.png)
 
-### Convergencia Adaptativa
+### Brecha regional: Sucre + Córdoba + Bolívar vs. nacional
 
-Las probabilidades del perfil se estabilizan y la entropía cae conforme se responden preguntas. El cuestionario se detiene cuando la incertidumbre es suficientemente baja.
+Solo **1.091 programas** atienden a 3 departamentos con más de 3.5M de habitantes. La región tiene menos posgrados y más programas técnicos que el promedio nacional.
 
-<img src="docs/assets/adaptive-convergence.png" alt="Convergencia adaptativa" width="100%">
+![Comparación regional](docs/assets/regional-comparison.png)
 
-</td>
-</tr>
-</table>
+### Top 10 recomendaciones para un estudiante Investigador
 
-### 17.230 Programas Activos por Campo CINE
+Los priors por matrícula penalizan campos sobresaturados (Administración y Derecho: 5.887 programas) e impulsan campos más pequeños. Programas virtuales reciben un boost de 1.5x.
 
-<img src="docs/assets/cine-distribution.png" alt="Distribución por campo CINE" width="100%">
-
-### Brecha Regional: Sucre + Córdoba + Bolívar vs. Nacional
-
-Solo **1.091 programas** atienden a 3 departamentos con más de 3.5M de habitantes. La región tiene menos programas de posgrado y más programas técnicos que el promedio nacional.
-
-<img src="docs/assets/regional-comparison.png" alt="Comparación regional" width="100%">
-
-### Top 10 Recomendaciones para un Estudiante Investigador
-
-Los priors ponderados por matrícula penalizan campos sobresaturados (Administración y Derecho: 5.887 programas) e impulsan campos más pequeños. Los programas virtuales reciben un boost de 1.5x.
-
-<img src="docs/assets/recommendations.png" alt="Recomendaciones de programas" width="100%">
+![Recomendaciones de programas](docs/assets/recommendations.png)
 
 ---
 

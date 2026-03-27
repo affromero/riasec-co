@@ -26,44 +26,31 @@ This is the **first package combining vocational assessment with national educat
 
 ## At a Glance
 
-<table>
-<tr>
-<td width="50%">
+### Adaptive RIASEC profile
 
-### Adaptive Quiz Profile
+The Bayesian engine converges on a student's profile in ~12 questions. Left: the resulting profile. Right: how probabilities stabilize and entropy drops with each answer.
 
-The Bayesian engine converges on a student's RIASEC profile in ~12 questions using entropy-based stopping.
+<p align="center">
+  <img src="docs/assets/profile-radar.png" alt="RIASEC radar chart" width="320">
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="docs/assets/adaptive-convergence.png" alt="Adaptive convergence" width="520">
+</p>
 
-<img src="docs/assets/profile-radar.png" alt="RIASEC radar chart" width="100%">
+### 17,230 active programs by CINE field
 
-</td>
-<td width="50%">
+![CINE field distribution](docs/assets/cine-distribution.png)
 
-### Adaptive Convergence
-
-Profile probabilities stabilize and entropy drops as questions are answered. The quiz stops when uncertainty is low enough.
-
-<img src="docs/assets/adaptive-convergence.png" alt="Adaptive convergence" width="100%">
-
-</td>
-</tr>
-</table>
-
-### 17,230 Active Programs by CINE Field
-
-<img src="docs/assets/cine-distribution.png" alt="CINE field distribution" width="100%">
-
-### Regional Gap: Sucre + Cordoba + Bolivar vs. National
+### Regional gap: Sucre + Cordoba + Bolivar vs. national
 
 Only **1,091 programs** serve 3 departments with 3.5M+ people. The region has fewer graduate programs and more technical programs than the national average.
 
-<img src="docs/assets/regional-comparison.png" alt="Regional comparison" width="100%">
+![Regional comparison](docs/assets/regional-comparison.png)
 
-### Top 10 Recommendations for an Investigative Student
+### Top 10 recommendations for an Investigative student
 
 Enrollment-weighted priors downweight oversaturated fields (Administracion y Derecho: 5,887 programs) and boost smaller fields. Virtual programs get a 1.5x boost.
 
-<img src="docs/assets/recommendations.png" alt="Program recommendations" width="100%">
+![Program recommendations](docs/assets/recommendations.png)
 
 ---
 
