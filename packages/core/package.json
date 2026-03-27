@@ -36,7 +36,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/afromero/riasec-co.git",
+    "url": "https://github.com/affromero/riasec-co.git",
     "directory": "packages/core"
   },
   "devDependencies": {
