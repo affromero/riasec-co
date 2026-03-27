@@ -176,7 +176,41 @@ results <- recommend(profile(quiz), departments = c("Sucre", "Córdoba"))
 head(results[, c("nombre_programa", "nombre_institucion", "score")])
 ```
 
-## ¿Cómo Funciona?
+## ¿Por Qué Bayes?
+
+### La versión simple
+
+Imagina que estás adivinando el sabor favorito de helado de alguien, pero solo puedes hacerle preguntas de sí o no. Un test normal le preguntaría las 20 preguntas sin importar qué — incluso si después de 5 preguntas ya es obvio que le encanta el chocolate.
+
+Nuestro motor es más inteligente: **empieza sin saber nada**, y con cada respuesta actualiza lo que cree saber. Si después de unas pocas preguntas ya está bastante seguro de tu perfil, **se detiene**. Si todavía hay duda entre dos tipos, pregunta específicamente sobre esos. Esto se llama *inferencia bayesiana* — aprender de la evidencia de forma óptima.
+
+El resultado: en vez de 48 preguntas, típicamente bastan **~12** para obtener un perfil confiable. Para un estudiante respondiendo en el celular con datos limitados, eso es la diferencia entre terminar el test o abandonarlo.
+
+### La versión técnica
+
+La mayoría de tests vocacionales en línea usan **puntuación simple**: suman tus respuestas por tipo y te dan el más alto. Esto tiene tres problemas fundamentales:
+
+1. **Necesitas responder todas las preguntas** — no hay forma de parar temprano porque no sabes cuánta información ya tienes.
+2. **Todas las preguntas pesan igual** — la pregunta 47 aporta lo mismo que la pregunta 1, aunque tu perfil ya esté claro.
+3. **No hay medida de certeza** — te dice "eres Investigador" pero no si es con 95% o 51% de confianza.
+
+La inferencia bayesiana resuelve los tres problemas:
+
+### Cómo funciona, paso a paso
+
+**Antes de empezar**, el motor no sabe nada sobre ti. Representa esa ignorancia como una distribución uniforme sobre los 6 tipos RIASEC — cada uno tiene la misma probabilidad (16.7%). Matemáticamente esto es un **prior Dirichlet** con α = (1, 1, 1, 1, 1, 1).
+
+**Con cada respuesta**, el motor actualiza sus creencias. Si respondes "5 — Muy preciso" a "Me gusta resolver problemas complejos" (un ítem Investigador), el parámetro α_I sube. Después de varias respuestas, la distribución se concentra en los tipos que realmente te describen.
+
+**La selección adaptativa** elige la siguiente pregunta basándose en cuál reduciría más la incertidumbre. Si ya está claro que no eres Artístico pero aún no distingue entre Investigador y Convencional, preguntará sobre esos dos — no perderá tiempo en preguntas cuya respuesta ya puede predecir.
+
+**La parada automática** mide la entropía de Shannon (incertidumbre) del perfil. Cuando cae por debajo de 1.5 bits (de un máximo de 2.585), el cuestionario se detiene. Esto típicamente ocurre en **~12 preguntas** en vez de las 48 del test completo.
+
+### ¿Por qué importa aquí?
+
+Para un estudiante rural en Sucre respondiendo en el celular de un familiar, la diferencia entre 48 preguntas y 12 es la diferencia entre completar el test o abandonarlo. El enfoque bayesiano hace que cada pregunta cuente — y le da al estudiante (y al orientador) una medida cuantitativa de qué tan seguro es el resultado.
+
+### El motor en un diagrama
 
 ```
       Prior Dirichlet           Selección Adaptativa de Ítems      Parada por Entropía

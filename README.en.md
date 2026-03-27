@@ -176,7 +176,41 @@ results <- recommend(profile(quiz), departments = c("Sucre", "Cordoba"))
 head(results[, c("nombre_programa", "nombre_institucion", "score")])
 ```
 
-## How It Works
+## Why Bayes?
+
+### The simple version
+
+Imagine you're guessing someone's favorite ice cream flavor, but you can only ask yes/no questions. A normal test would ask all 20 questions regardless — even if after 5 it's already obvious they love chocolate.
+
+Our engine is smarter: it **starts knowing nothing**, and with each answer updates what it believes. If after a few questions it's already pretty sure of your profile, **it stops**. If there's still doubt between two types, it asks specifically about those. This is called *Bayesian inference* — learning from evidence optimally.
+
+The result: instead of 48 questions, typically **~12** are enough for a confident profile. For a student answering on a phone with limited data, that's the difference between finishing the test and abandoning it.
+
+### The technical version
+
+Most online vocational tests use **simple scoring**: they sum your responses by type and give you the highest. This has three fundamental problems:
+
+1. **You must answer every question** — there's no way to stop early because you don't know how much information you already have.
+2. **Every question weighs the same** — question 47 contributes the same as question 1, even when your profile is already clear.
+3. **No measure of certainty** — it says "you're Investigative" but not whether that's with 95% or 51% confidence.
+
+Bayesian inference solves all three.
+
+### How it works, step by step
+
+**Before starting**, the engine knows nothing about you. It represents that ignorance as a uniform distribution over the 6 RIASEC types — each has equal probability (16.7%). Mathematically, this is a **Dirichlet prior** with alpha = (1, 1, 1, 1, 1, 1).
+
+**With each answer**, the engine updates its beliefs. If you respond "5 — Very accurate" to "I like to solve complex problems" (an Investigative item), the alpha_I parameter increases. After several answers, the distribution concentrates on the types that actually describe you.
+
+**Adaptive selection** chooses the next question based on which would reduce uncertainty the most. If it's already clear you're not Artistic but can't yet distinguish between Investigative and Conventional, it will ask about those two — not waste time on questions whose answer it can already predict.
+
+**Automatic stopping** measures the Shannon entropy (uncertainty) of the profile. When it drops below 1.5 bits (out of a maximum of 2.585), the quiz stops. This typically happens in **~12 questions** instead of the full 48.
+
+### Why does this matter here?
+
+For a rural student in Sucre answering on a family member's phone, the difference between 48 questions and 12 is the difference between completing the test and abandoning it. The Bayesian approach makes every question count — and gives the student (and counselor) a quantitative measure of how confident the result is.
+
+### The engine in a diagram
 
 ```
         Dirichlet Prior              Adaptive Item Selection        Entropy-Based Stopping
