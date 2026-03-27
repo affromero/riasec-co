@@ -117,6 +117,8 @@ results.forEach((r, i) =>
 )
 ```
 
+![TypeScript output](docs/assets/output-typescript.png)
+
 ### Python
 
 ```python
@@ -148,6 +150,8 @@ df = Programs.load()  # Polars DataFrame, 30,809 rows
 df.filter(pl.col("departamento") == "Sucre").group_by("cine_amplio").len()
 ```
 
+![Python output](docs/assets/output-python.png)
+
 ### R
 
 ```r
@@ -176,6 +180,8 @@ profile(quiz)
 results <- recommend(profile(quiz), departments = c("Sucre", "Cordoba"))
 head(results[, c("nombre_programa", "nombre_institucion", "score")])
 ```
+
+![R output](docs/assets/output-r.png)
 
 ## Why Bayes?
 
