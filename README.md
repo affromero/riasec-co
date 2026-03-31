@@ -13,6 +13,8 @@ Motor bayesiano adaptativo RIASEC con el catálogo completo del SNIES — 33 dep
 [![Python](https://img.shields.io/badge/Python-3.10+-3776ab)](https://www.python.org/)
 [![R](https://img.shields.io/badge/R-4.1+-276dc3)](https://www.r-project.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![Socket](https://img.shields.io/badge/Socket-protected-blueviolet?logo=socket.dev)](https://socket.dev)
+[![min-release-age](https://img.shields.io/badge/min--release--age-7%20days-brightgreen)](https://docs.npmjs.com/cli/v10/using-npm/config#min-release-age)
 
 [Read in English](README.en.md)
 
