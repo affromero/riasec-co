@@ -79,7 +79,7 @@ plot_profile <- function(profile, title = "Perfil RIASEC") {
   df <- data.frame(
     type = factor(RIASEC_TYPES, levels = RIASEC_TYPES),
     value = as.numeric(profile[RIASEC_TYPES]),
-    label = c("Realista", "Investigador", "Artístico",
+    label = c("Realista", "Investigador", "Art\u00edstico",
               "Social", "Emprendedor", "Convencional")
   )
 
