@@ -4,8 +4,9 @@
 #' SNIES (Sistema Nacional de Información de la Educación Superior).
 #' Contains 30,809 programs (17,230 active) across 33 departments.
 #'
-#' @format A data frame with 30,809 rows and 24 columns:
+#' @format A data frame with 30,809 rows and 30 columns:
 #' \describe{
+#'   \item{codigo_institucion_padre}{Parent institution code}
 #'   \item{codigo_snies}{SNIES program code (integer)}
 #'   \item{nombre_programa}{Official program name}
 #'   \item{codigo_institucion}{Institution code}
@@ -15,9 +16,10 @@
 #'   \item{caracter_academico}{Academic character (e.g., Universidad)}
 #'   \item{sector}{Sector: "Oficial" or "Privado"}
 #'   \item{nivel_academico}{"Pregrado" or "Posgrado"}
-#'   \item{nivel_formacion}{Education level (e.g., Universitario, Tecnológico)}
+#'   \item{nivel_formacion}{Education level (e.g., Universitario, Tecnol\u00f3gico)}
 #'   \item{modalidad}{Modality (e.g., Presencial, Virtual, A distancia)}
 #'   \item{titulo_otorgado}{Degree title awarded}
+#'   \item{reconocimiento}{Quality recognition (e.g., Acreditaci\u00f3n de alta calidad)}
 #'   \item{cine_amplio}{CINE F 2013 AC broad field}
 #'   \item{cine_especifico}{CINE F 2013 AC specific field}
 #'   \item{cine_detallado}{CINE F 2013 AC detailed field}
@@ -28,8 +30,12 @@
 #'   \item{creditos}{Number of credits (integer, may be NA)}
 #'   \item{periodos_duracion}{Duration in periods (integer, may be NA)}
 #'   \item{periodicidad}{Period type (e.g., Semestral)}
+#'   \item{periodicidad_admisiones}{Admissions period type}
 #'   \item{costo_matricula}{Tuition cost for new students in COP (may be NA)}
 #'   \item{en_convenio}{Whether offered via agreement}
+#'   \item{vigencia_anos}{Validity period in years}
+#'   \item{ciclos_propedeuticos}{Whether program uses preparatory cycles}
+#'   \item{fecha_registro_snies}{SNIES registration date}
 #' }
 #' @source SNIES, Ministerio de Educación Nacional de Colombia.
 #'   \url{https://hecaa.mineducacion.gov.co/consultaspublicas/programas}

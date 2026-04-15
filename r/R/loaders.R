@@ -65,6 +65,7 @@ load_mapping <- function() {
 #' @return A ggplot2 object (if ggplot2 is available), or base R plot
 #' @export
 #' @importFrom stats setNames
+#' @importFrom graphics barplot
 plot_profile <- function(profile, title = "Perfil RIASEC") {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     # Base R fallback: bar chart

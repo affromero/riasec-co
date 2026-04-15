@@ -19,6 +19,7 @@
 #' @param limit Integer: maximum recommendations. Default: 20
 #' @return Data frame with program data plus score, similarity, matching_types
 #' @export
+#' @importFrom utils head
 #' @examples
 #' profile <- c(R = 0.05, I = 0.55, A = 0.05, S = 0.10, E = 0.10, C = 0.15)
 #' results <- recommend(profile, departments = "Sucre", limit = 10)
