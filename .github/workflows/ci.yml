@@ -84,9 +84,11 @@ jobs:
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           working-directory: r
-          extra-packages: any::rcmdcheck
+          extra-packages: any::rcmdcheck, any::roxygen2
       - name: Generate data
         run: Rscript r/data-raw/generate.R
+      - name: Generate man pages
+        run: Rscript -e 'roxygen2::roxygenize("r")'
       - uses: r-lib/actions/check-r-package@v2
         with:
           working-directory: r
