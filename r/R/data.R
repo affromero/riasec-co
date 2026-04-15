@@ -16,10 +16,10 @@
 #'   \item{caracter_academico}{Academic character (e.g., Universidad)}
 #'   \item{sector}{Sector: "Oficial" or "Privado"}
 #'   \item{nivel_academico}{"Pregrado" or "Posgrado"}
-#'   \item{nivel_formacion}{Education level (e.g., Universitario, Tecnol\u00f3gico)}
+#'   \item{nivel_formacion}{Education level (e.g., Universitario)}
 #'   \item{modalidad}{Modality (e.g., Presencial, Virtual, A distancia)}
 #'   \item{titulo_otorgado}{Degree title awarded}
-#'   \item{reconocimiento}{Quality recognition (e.g., Acreditaci\u00f3n de alta calidad)}
+#'   \item{reconocimiento}{Quality recognition status}
 #'   \item{cine_amplio}{CINE F 2013 AC broad field}
 #'   \item{cine_especifico}{CINE F 2013 AC specific field}
 #'   \item{cine_detallado}{CINE F 2013 AC detailed field}
