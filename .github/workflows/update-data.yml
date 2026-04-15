@@ -25,14 +25,21 @@ jobs:
         run: |
           echo "TODO: Automate HECAA download (requires JSF ViewState)"
           echo "For now, manually download and commit programas-export.xlsx"
+          if [ ! -f .data-raw/programas-export.xlsx ]; then
+            echo "::warning::programas-export.xlsx not found — skipping update"
+            echo "SKIP_UPDATE=true" >> "$GITHUB_ENV"
+          fi
 
       - name: Parse SNIES data
+        if: env.SKIP_UPDATE != 'true'
         run: npm run update-snies
 
       - name: Validate
+        if: env.SKIP_UPDATE != 'true'
         run: npm run validate
 
       - name: Commit if changed
+        if: env.SKIP_UPDATE != 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
