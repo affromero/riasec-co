@@ -1,8 +1,14 @@
 {
   "meta": {
     "description": "Mapping from Holland RIASEC types to Colombian CINE F 2013 AC broad fields (campo amplio)",
-    "source": "Expert mapping based on Holland (1997) occupational classification and SNIES CINE taxonomy",
-    "note": "Field names match exact values in SNIES program catalog. Weights range 0-1: 1.0 = primary match, 0.5-0.7 = secondary match."
+    "source": "Author-curated weighted mapping based on Holland (1997) classical occupational typology and the SNIES CINE F 2013 AC field taxonomy maintained by Colombia's Ministry of Education.",
+    "note": "Field names match exact values in SNIES program catalog. Weights range 0-1: 1.0 = primary match, 0.5-0.7 = secondary match.",
+    "validation_status": "Not independently psychometrically validated against external criteria such as O*NET RIASEC interest profiles. The mapping is consistent with classical Holland theory, but a more rigorous derivation would require validation studies that are not currently published.",
+    "contribution_invitation": "If you have access to empirically derived RIASEC-to-CINE weights (e.g., from O*NET interest profiles cross-walked via SOC-ISCO-CINE), pull requests are welcome. See github.com/affromero/riasec-co.",
+    "references": [
+      "Holland, J. L. (1997). Making vocational choices: A theory of vocational personalities and work environments (3rd ed.). Psychological Assessment Resources. https://archive.org/details/makingvocational0000holl",
+      "SNIES — Sistema Nacional de Información de la Educación Superior. https://hecaa.mineducacion.gov.co/consultaspublicas/programas"
+    ]
   },
   "mapping": {
     "R": {

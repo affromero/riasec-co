@@ -1,5 +1,20 @@
 # Changelog
 
+## [Unreleased]
+
+### Fixed
+
+- `data/canonical/items_es.json`: corrected the Spanish-version reference. The previous citation ("Armstrong, P. I., Allison, W., & Rounds, J. (2020). Alternate Forms Public Domain RIASEC Markers") was wrong on both authors and year. The actual paper that adapted the IPIP-BIM scale to Spanish (Río de la Plata variant) is Cupani, M., Moran, V. E., Azpilicueta, A. E., & Piccolo, N. V. (2019), *Electronic Journal of Research in Educational Psychology*, 17(2), 359-382 (DOI 10.25115/ejrep.v17i48.2136).
+
+### Added
+
+- `reference_doi` and `reference_url` fields on `items_es.json` and `items_en.json` so consumers can verify the source citation without manual lookup.
+- `validation_status`, `contribution_invitation`, and `references` fields on `mapping.json`. The mapping is author-curated based on Holland (1997) and the SNIES CINE taxonomy; it has not been independently psychometrically validated against external criteria such as O*NET RIASEC interest profiles. PRs with empirically derived weights are welcome.
+
+### Changed
+
+- `data/canonical/mapping.json`'s `source` description now reads "Author-curated weighted mapping..." (previously "Expert mapping...") for accuracy and transparency.
+
 ## [0.1.0] - 2026-03-26
 
 Initial release of `riasec-co` — the first open-source package combining vocational assessment with national education data.
