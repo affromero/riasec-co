@@ -148,10 +148,26 @@ export interface RecommendConfig {
 export interface ProgramFilters {
   departments?: string[];
   active?: boolean;
+  /**
+   * Audience the recommendations are for. `"undergrad"` (the default) restricts
+   * to entry-level programs a high-school graduate can apply to directly:
+   * Universitario, Tecnológico, Formación técnica profesional. `"all"` includes
+   * every level (Maestría, Doctorado, Especializaciones). If `nivel_formacion`
+   * is also passed, the explicit allowlist overrides this audience setting.
+   */
+  audience?: "undergrad" | "all";
+  /** Explicit allowlist of `nivel_formacion` strings. Overrides `audience`. */
   nivel_formacion?: string[];
   modalidad?: string[];
   sector?: string[];
 }
+
+/** `nivel_formacion` values a high-school graduate can enter directly. */
+export const UNDERGRAD_LEVELS: readonly string[] = [
+  "Universitario",
+  "Tecnológico",
+  "Formación técnica profesional",
+] as const;
 
 /** Prior weights for recommendation scoring */
 export interface PriorWeights {

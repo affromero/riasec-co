@@ -108,6 +108,58 @@ describe("recommend", () => {
     }
   });
 
+  it("defaults to undergrad-entry levels (excludes Doctorado/Maestría)", () => {
+    const programs = loadPrograms();
+    const results = recommend({
+      profile: investigativeProfile,
+      programs,
+      filters: { active: true },
+      limit: 50,
+    });
+
+    const allowedLevels = new Set([
+      "Universitario",
+      "Tecnológico",
+      "Formación técnica profesional",
+    ]);
+    for (const r of results) {
+      expect(allowedLevels.has(r.program.nivel_formacion)).toBe(true);
+    }
+  });
+
+  it("audience='all' includes postgraduate levels", () => {
+    const programs = loadPrograms();
+    const results = recommend({
+      profile: investigativeProfile,
+      programs,
+      filters: { active: true, audience: "all" },
+      limit: 100,
+    });
+
+    const levels = new Set(results.map((r) => r.program.nivel_formacion));
+    // Must include at least one postgraduate level when audience is 'all'.
+    const hasPostgrad = ["Doctorado", "Maestría", "Especialización universitaria"].some((l) =>
+      levels.has(l),
+    );
+    expect(hasPostgrad).toBe(true);
+  });
+
+  it("explicit nivel_formacion overrides audience default", () => {
+    const programs = loadPrograms();
+    const results = recommend({
+      profile: investigativeProfile,
+      programs,
+      // audience='undergrad' is the default; passing an explicit allowlist
+      // including a postgraduate level should still surface those programs.
+      filters: { active: true, nivel_formacion: ["Maestría"] },
+      limit: 10,
+    });
+    expect(results.length).toBeGreaterThan(0);
+    for (const r of results) {
+      expect(r.program.nivel_formacion).toBe("Maestría");
+    }
+  });
+
   it("includes match details", () => {
     const programs = loadPrograms();
     const results = recommend({

@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.2.0] - 2026-04-25
+
+### BREAKING
+
+- `recommend()` now defaults to undergrad-entry programs only (Universitario, Tecnológico, Formación técnica profesional). The default audience is `"undergrad"` because most consumers of this package build vocational guidance for high-school graduates, and surfacing Doctorado / Maestría / Especialización suggestions to a 16-year-old is not meaningful guidance.
+- Existing consumers who rely on getting all program levels back must now pass `filters: { audience: "all" }`. Existing consumers who pass an explicit `filters.nivel_formacion` array are unaffected — the explicit allowlist still overrides the audience default.
+
+### Added
+
+- `ProgramFilters.audience: "undergrad" | "all"` field. Default is `"undergrad"`. Explicit `nivel_formacion` array overrides this.
+- `UNDERGRAD_LEVELS` exported constant for consumers that want to reuse the same level-filtering logic outside the recommender.
+- 3 new tests in `__tests__/recommender.test.ts` covering the default filter, the `audience: "all"` opt-out, and the explicit-allowlist override.
+
 ## [0.1.3] - 2026-04-25
 
 ### Fixed

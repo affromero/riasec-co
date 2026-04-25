@@ -8,7 +8,7 @@
 
 import { cosineSimilarity } from "./scoring.js";
 import { loadMapping } from "./programs.js";
-import { RIASEC_TYPES } from "./types.js";
+import { RIASEC_TYPES, UNDERGRAD_LEVELS } from "./types.js";
 import type {
   RIASECProfile,
   RIASECType,
@@ -64,8 +64,18 @@ function applyFilters(programs: Program[], filters?: ProgramFilters): Program[] 
   }
 
   if (filters.nivel_formacion?.length) {
+    // Explicit allowlist takes precedence over the audience default.
     const niveles = new Set(filters.nivel_formacion);
     result = result.filter((p) => niveles.has(p.nivel_formacion));
+  } else {
+    // Default audience is `undergrad`: only programs a high-school graduate
+    // can enter directly. Consumers building tools for graduate students
+    // should pass `audience: "all"` to opt out.
+    const audience = filters.audience ?? "undergrad";
+    if (audience === "undergrad") {
+      const niveles = new Set(UNDERGRAD_LEVELS);
+      result = result.filter((p) => niveles.has(p.nivel_formacion));
+    }
   }
 
   if (filters.modalidad?.length) {
