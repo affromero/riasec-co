@@ -300,14 +300,14 @@ R CMD check r/
 
 ## Referencias
 
-- Holland, J. L. (1997). *Making vocational choices*. Psychological Assessment Resources.
-- Liao, H.-Y., Armstrong, P. I., & Rounds, J. (2008). Development and initial validation of public domain Basic Interest Markers. *Journal of Vocational Behavior*, 73(1), 159-183.
-- Armstrong, P. I., Allison, W., & Rounds, J. (2020). Alternate Forms Public Domain RIASEC Markers. *Electronic Journal of Research in Educational Psychology*.
-- Nye, C. D., Su, R., Rounds, J., & Drasgow, F. (2012). Vocational interests and performance. *Perspectives on Psychological Science*, 7(4), 384-403.
-- SNIES, Ministerio de Educación Nacional de Colombia.
+- Holland, J. L. (1997). *Making vocational choices: A theory of vocational personalities and work environments* (3rd ed.). Psychological Assessment Resources. [archive.org](https://archive.org/details/makingvocational0000holl)
+- Liao, H.-Y., Armstrong, P. I., & Rounds, J. (2008). Development and initial validation of public domain Basic Interest Markers. *Journal of Vocational Behavior*, 73(1), 159-183. [DOI: 10.1016/j.jvb.2007.12.002](https://doi.org/10.1016/j.jvb.2007.12.002)
+- Cupani, M., Moran, V. E., Azpilicueta, A. E., & Piccolo, N. V. (2019). Alternate Forms Public Domain RIASEC Markers for Interests and Self-Efficacy: Spanish version. *Electronic Journal of Research in Educational Psychology*, 17(2), 359-382. [DOI: 10.25115/ejrep.v17i48.2136](https://ojs.ual.es/ojs/index.php/EJREP/article/view/2136)
+- Nye, C. D., Su, R., Rounds, J., & Drasgow, F. (2012). Vocational interests and performance: A quantitative summary of over 60 years of research. *Perspectives on Psychological Science*, 7(4), 384-403. [PubMed: 26168474](https://pubmed.ncbi.nlm.nih.gov/26168474/)
+- SNIES, Ministerio de Educación Nacional de Colombia. [Buscador público](https://hecaa.mineducacion.gov.co/consultaspublicas/programas)
 - IPIP: International Personality Item Pool.
 
-Ver [METHODOLOGY.md](METHODOLOGY.md) para la metodología científica completa.
+Ver [METHODOLOGY.md](METHODOLOGY.md) para la metodología científica completa (versión en inglés: [METHODOLOGY.en.md](METHODOLOGY.en.md)).
 
 ## Licencia
 

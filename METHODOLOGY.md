@@ -1,173 +1,177 @@
-# Methodology
+# Metodología
 
-Scientific methodology for the `riasec-co` vocational guidance engine.
+Metodología científica del motor de orientación vocacional `riasec-co`.
 
-## 1. Theoretical Foundation
+> Disponible en inglés: [METHODOLOGY.en.md](./METHODOLOGY.en.md).
 
-### Holland's RIASEC Theory
+## 1. Fundamento teórico
 
-Holland's (1997) theory of vocational personalities posits that people and work environments can be classified into six types:
+### Teoría RIASEC de Holland
 
-| Type | Description | Example Occupations |
-|------|-------------|-------------------|
-| **R** Realistic | Hands-on, practical, mechanical | Engineers, farmers, mechanics |
-| **I** Investigative | Analytical, intellectual, scientific | Scientists, researchers, doctors |
-| **A** Artistic | Creative, original, expressive | Artists, writers, designers |
-| **S** Social | Helping, teaching, counseling | Teachers, counselors, nurses |
-| **E** Enterprising | Leading, persuading, managing | Managers, salespeople, lawyers |
-| **C** Conventional | Organizing, detail-oriented | Accountants, administrators, IT |
+La teoría de Holland (1997) sobre personalidades vocacionales propone que las personas y los entornos laborales pueden clasificarse en seis tipos:
 
-Career satisfaction is maximized when a person's type matches their work environment (person-environment congruence). Meta-analyses confirm this relationship: Nye et al. (2012) found vocational interests predict performance (rho = .14-.28), and Nye et al. (2020) found interest congruence predicts job satisfaction (rho = .17-.36).
+| Tipo | Descripción | Ocupaciones de ejemplo |
+|------|-------------|------------------------|
+| **R** Realista | Práctico, manual, mecánico | Ingenieros, agricultores, mecánicos |
+| **I** Investigador | Analítico, intelectual, científico | Científicos, investigadores, médicos |
+| **A** Artístico | Creativo, original, expresivo | Artistas, escritores, diseñadores |
+| **S** Social | Ayudar, enseñar, orientar | Docentes, orientadores, enfermería |
+| **E** Emprendedor | Liderar, persuadir, gestionar | Gerentes, vendedores, abogados |
+| **C** Convencional | Organizar, atención al detalle | Contadores, administradores, TI |
 
-### IPIP RIASEC Markers
+La satisfacción laboral se maximiza cuando el tipo de la persona coincide con su entorno de trabajo (congruencia persona-entorno). Los metaanálisis confirman esta relación: Nye et al. (2012) encontraron que los intereses vocacionales predicen el desempeño (rho = .14-.28), y Hoff et al. (2020) encontraron que la coincidencia de intereses predice la satisfacción laboral (rho = .19, IC 95% [.16, .21], k = 105 estudios, N = 39.602).
 
-We use the 48-item IPIP Basic Interest Markers developed by Liao, Armstrong & Rounds (2008). These are public-domain items validated against Holland's Self-Directed Search (SDS). Each item loads primarily on one RIASEC type and is rated on a 1-5 Likert scale.
+### Marcadores RIASEC IPIP
 
-The Spanish adaptation follows Armstrong, Allison & Rounds (2020), who validated alternate forms of the IPIP RIASEC markers across languages.
+Usamos los 48 ítems de IPIP Basic Interest Markers desarrollados por Liao, Armstrong y Rounds (2008). Son ítems de dominio público validados contra el Self-Directed Search (SDS) de Holland. Cada ítem carga principalmente sobre un tipo RIASEC y se responde en escala Likert de 1 a 5.
 
-**Item properties:**
-- 8 items per RIASEC type (48 total)
-- All positively keyed
-- 1-5 Likert response scale
-- Public domain (no licensing restrictions)
+La adaptación al español sigue a Cupani, Moran, Azpilicueta y Piccolo (2019), quienes desarrollaron y validaron una versión rioplatense en muestras universitarias argentinas.
 
-## 2. Bayesian Adaptive Testing
+**Propiedades de los ítems:**
+- 8 ítems por tipo RIASEC (48 en total)
+- Todos formulados en positivo
+- Escala de respuesta Likert de 1 a 5
+- Dominio público (sin restricciones de licencia)
 
-### Dirichlet-Categorical Model
+## 2. Test adaptativo bayesiano
 
-We model the student's RIASEC profile as a categorical distribution over 6 types, with a Dirichlet conjugate prior:
+### Modelo Dirichlet-categórico
+
+Modelamos el perfil RIASEC del estudiante como una distribución categórica sobre 6 tipos, con un prior conjugado Dirichlet:
 
 ```
 θ ~ Dirichlet(α₁, α₂, ..., α₆)
 ```
 
-**Prior:** α = (1, 1, 1, 1, 1, 1) — uniform (no prior preference)
+**Prior:** α = (1, 1, 1, 1, 1, 1) — uniforme (sin preferencia previa).
 
-**Posterior update:** After observing a response r (1-5) on an item of type k with positive keying:
+**Actualización posterior:** después de observar una respuesta r (1-5) en un ítem del tipo k con codificación positiva:
 
 ```
 α_k ← α_k + (r - 1) / 4
 ```
 
-This normalizes the response to [0, 1] and accumulates evidence for type k. A response of 1 ("very inaccurate") adds 0 evidence; a response of 5 ("very accurate") adds 1 unit.
+Esto normaliza la respuesta al intervalo [0, 1] y acumula evidencia para el tipo k. Una respuesta de 1 ("muy impreciso") aporta 0 evidencia; una respuesta de 5 ("muy preciso") aporta 1 unidad.
 
-**Posterior mean (expected profile):**
+**Media posterior (perfil esperado):**
 
 ```
 E[θ_k] = α_k / Σ α_j
 ```
 
-### Adaptive Item Selection
+### Selección adaptativa de ítems
 
-At each step, we select the item that maximizes expected information gain, measured as the expected KL divergence between the posterior before and after answering:
+En cada paso, seleccionamos el ítem que maximiza la ganancia de información esperada, medida como la divergencia KL esperada entre la posterior antes y después de responder:
 
 ```
 item* = argmax_i E_r[ D_KL( p(θ | data, r_i) || p(θ | data) ) ]
 ```
 
-We approximate this by simulating three response values (1, 3, 5) with equal weight and computing the average KL divergence.
+Aproximamos esto simulando tres valores de respuesta (1, 3, 5) con peso igual y promediando la divergencia KL.
 
-### Stopping Rule
+### Regla de detención
 
-The quiz stops when one of these conditions is met:
+El test termina cuando se cumple una de estas condiciones:
 
-1. **Entropy threshold:** Shannon entropy of the posterior mean drops below a configurable threshold (default: 1.5 bits). Maximum entropy for 6 categories is log₂(6) ≈ 2.585 bits.
-2. **Maximum questions:** A hard limit (default: 24) prevents excessively long quizzes.
-3. **Minimum questions:** At least 12 questions are always asked to ensure sufficient coverage.
+1. **Umbral de entropía:** la entropía de Shannon de la media posterior cae por debajo de un umbral configurable (por defecto: 1.5 bits). La entropía máxima para 6 categorías es log₂(6) ≈ 2.585 bits.
+2. **Máximo de preguntas:** un límite duro (por defecto: 24) evita tests excesivamente largos.
+3. **Mínimo de preguntas:** se hacen siempre al menos 12 para garantizar cobertura suficiente.
 
-In "full" mode, all 48 items are administered regardless of entropy.
+En modo "completo", se administran los 48 ítems independientemente de la entropía.
 
-### Confidence Metric
+### Métrica de confianza
 
-We define confidence as:
-
-```
-confidence = 1 - H(θ) / H_max
-```
-
-Where H(θ) is the Shannon entropy of the posterior mean and H_max = log₂(6). Confidence ranges from 0 (uniform — no information) to 1 (all probability mass on one type).
-
-## 3. SNIES Program Data
-
-### Source
-
-The complete catalog of Colombian higher education programs comes from the SNIES (Sistema Nacional de Informacion de la Educacion Superior), maintained by the Ministerio de Educacion Nacional de Colombia. The data is accessed through the HECAA portal at hecaa.mineducacion.gov.co.
-
-### Coverage
-
-- **30,809 total programs** (17,230 active, 13,579 inactive)
-- **33 departments** (all Colombian departments + Bogota D.C.)
-- **10 CINE F 2013 AC broad fields** (+ 1 generic category)
-- **33 specific fields**, **80+ detailed fields**
-- **Program metadata:** institution, modality (presencial/virtual/distancia), education level, credits, tuition cost, CINE classification
-
-### CINE Classification
-
-Programs are classified using the CINE F 2013 AC (Clasificacion Internacional Normalizada de la Educacion — Campos de educacion y capacitacion), the Colombian adaptation of UNESCO's ISCED-F 2013.
-
-## 4. RIASEC → CINE Mapping
-
-We map Holland's RIASEC types to CINE F 2013 AC broad fields based on the occupational content of each field. The mapping uses weights in [0, 1] to represent strength of association:
-
-| RIASEC Type | Primary CINE Fields (weight 1.0) | Secondary Fields (weight 0.5-0.7) |
-|-------------|----------------------------------|-----------------------------------|
-| R (Realistic) | Agropecuario; Ingenieria | Servicios |
-| I (Investigative) | Ciencias Naturales; Salud | TIC; Ingenieria |
-| A (Artistic) | Arte y Humanidades | Ciencias Sociales |
-| S (Social) | Educacion; Salud | Ciencias Sociales |
-| E (Enterprising) | Administracion y Derecho | Servicios |
-| C (Conventional) | TIC | Administracion |
-
-This mapping is stored in `data/canonical/mapping.json` and is overridable by consumers.
-
-## 5. Recommendation Engine
-
-### Scoring Model
-
-For each program, we compute:
+Definimos la confianza como:
 
 ```
-score(program) = similarity(student_profile, field_profile)
-              × prior(program)
+confianza = 1 - H(θ) / H_max
 ```
 
-**Similarity:** Cosine similarity between the student's RIASEC profile vector and the program's CINE field vector (derived from the mapping).
+Donde H(θ) es la entropía de Shannon de la media posterior y H_max = log₂(6). La confianza va de 0 (uniforme, sin información) a 1 (toda la masa de probabilidad sobre un tipo).
 
-**Prior:** Configurable multiplicative adjustments:
+## 3. Datos de programas SNIES
+
+### Fuente
+
+El catálogo completo de programas de educación superior colombianos proviene del SNIES (Sistema Nacional de Información de la Educación Superior), administrado por el Ministerio de Educación Nacional de Colombia. Los datos se acceden a través del portal HECAA en hecaa.mineducacion.gov.co.
+
+### Cobertura
+
+- **30.809 programas en total** (17.230 activos, 13.579 inactivos)
+- **33 departamentos** (todos los departamentos colombianos + Bogotá D.C.)
+- **10 campos amplios CINE F 2013 AC** (+ 1 categoría genérica)
+- **33 campos específicos**, **80+ campos detallados**
+- **Metadatos del programa:** institución, modalidad (presencial/virtual/distancia), nivel educativo, créditos, costo de matrícula, clasificación CINE
+
+### Clasificación CINE
+
+Los programas se clasifican usando CINE F 2013 AC (Clasificación Internacional Normalizada de la Educación: Campos de educación y capacitación), la adaptación colombiana del ISCED-F 2013 de la UNESCO.
+
+## 4. Mapeo RIASEC → CINE
+
+Mapeamos los tipos RIASEC de Holland a los campos amplios CINE F 2013 AC con base en el contenido ocupacional de cada campo. El mapeo usa pesos en [0, 1] para representar la fuerza de la asociación:
+
+| Tipo RIASEC | Campos CINE primarios (peso 1.0) | Campos secundarios (peso 0.5-0.7) |
+|-------------|-----------------------------------|-----------------------------------|
+| R (Realista) | Agropecuario; Ingeniería | Servicios |
+| I (Investigador) | Ciencias Naturales; Salud | TIC; Ingeniería |
+| A (Artístico) | Arte y Humanidades | Ciencias Sociales |
+| S (Social) | Educación; Salud | Ciencias Sociales |
+| E (Emprendedor) | Administración y Derecho | Servicios |
+| C (Convencional) | TIC | Administración |
+
+Este mapeo está almacenado en `data/canonical/mapping.json` y los consumidores pueden sobrescribirlo.
+
+## 5. Motor de recomendaciones
+
+### Modelo de puntaje
+
+Para cada programa calculamos:
+
+```
+puntaje(programa) = similitud(perfil_estudiante, perfil_campo)
+                  × prior(programa)
+```
+
+**Similitud:** similitud coseno entre el vector de perfil RIASEC del estudiante y el vector del campo CINE del programa (derivado del mapeo).
+
+**Prior:** ajustes multiplicativos configurables:
 
 ```
 prior = base
-      × (1 + enrollmentWeight × log(N_total / N_field))
-      × (1 + regionalBoost × isInRegion)
-      × (1 + virtualBoost × isVirtual)
+      × (1 + pesoMatricula × log(N_total / N_campo))
+      × (1 + impulsoRegional × estaEnRegion)
+      × (1 + impulsoVirtual × esVirtual)
 ```
 
-### Enrollment-Weighted Priors
+### Priors ponderados por matrícula
 
-The key innovation is the enrollment-weighted prior. With a negative `enrollmentWeight` (default: -0.3), fields with high enrollment (e.g., Administracion de Empresas y Derecho, with 10,686 programs) are downweighted relative to fields with low enrollment (e.g., Agropecuario with 1,150 programs).
+La innovación clave es el prior ponderado por matrícula. Con un `pesoMatricula` negativo (por defecto: -0.3), los campos con alta matrícula (por ejemplo, Administración de Empresas y Derecho con 10.686 programas) reciben menor peso relativo a campos con baja matrícula (por ejemplo, Agropecuario con 1.150 programas).
 
-The logarithmic scaling ensures the effect is proportional: a field with 10x fewer programs gets boosted by about 0.7 units. This naturally surfaces programs in less-saturated fields like Aquaculture or Environmental Science over ubiquitous Business Administration programs, when the RIASEC match is equal.
+La escala logarítmica garantiza que el efecto sea proporcional: un campo con 10 veces menos programas se impulsa en aproximadamente 0.7 unidades. Esto naturalmente sube programas en campos menos saturados como Acuicultura o Ciencia Ambiental sobre los omnipresentes programas de Administración de Empresas, cuando la coincidencia RIASEC es igual.
 
-### Regional and Virtual Boosts
+### Impulsos regional y virtual
 
-- **Regional boost:** Programs in the student's specified departments receive a multiplicative boost. For students in rural regions like San Jorge y La Mojana (Sucre/Cordoba/Bolivar), this surfaces local options they can access without relocating.
-- **Virtual boost:** Virtual and distance programs receive a boost, recognizing that geographic access is a primary barrier for rural students.
+- **Impulso regional:** los programas en los departamentos especificados por el estudiante reciben un impulso multiplicativo. Para estudiantes en regiones rurales como San Jorge y La Mojana (Sucre/Córdoba/Bolívar), esto saca a la luz opciones locales accesibles sin tener que reubicarse.
+- **Impulso virtual:** los programas virtuales y a distancia reciben un impulso, reconociendo que el acceso geográfico es una barrera primaria para estudiantes rurales.
 
-## 6. Limitations and Future Work
+## 6. Limitaciones y trabajo futuro
 
-1. **Item bank:** The 48-item IPIP markers are a screening instrument, not a diagnostic tool. For clinical vocational counseling, a full SDS or validated Colombian instrument should be used.
-2. **RIASEC→CINE mapping:** The current mapping is expert-derived, not empirically validated against Colombian employment data. Future work should validate against employment outcomes.
-3. **Enrollment data:** The current version uses program counts as a proxy for enrollment. Future versions will incorporate actual enrollment statistics from the HECAA REST API.
-4. **IRT model:** The current model uses a simplified Dirichlet update. A full Item Response Theory model (e.g., Graded Response Model) with calibrated item parameters would improve measurement precision.
-5. **Cultural adaptation:** While the Spanish items are adapted from Armstrong et al. (2020), they have not been specifically validated in the Colombian context with rural student populations.
+1. **Banco de ítems:** los 48 ítems IPIP son un instrumento de tamizaje, no diagnóstico. Para orientación vocacional clínica debe usarse el SDS completo o un instrumento colombiano validado.
+2. **Mapeo RIASEC → CINE:** el mapeo actual es curado por el autor con base en la tipología clásica de Holland, no validado psicométricamente de forma independiente contra criterios externos como los perfiles RIASEC del sistema O*NET. Trabajos futuros deberían validarlo contra resultados de empleo colombianos. Pull requests con pesos derivados empíricamente son bienvenidos.
+3. **Datos de matrícula:** la versión actual usa el conteo de programas como aproximación a la matrícula. Versiones futuras incorporarán estadísticas reales de matrícula desde la API REST de HECAA.
+4. **Modelo IRT:** el modelo actual usa una actualización Dirichlet simplificada. Un modelo de teoría de respuesta al ítem (IRT) completo (por ejemplo, Graded Response Model) con parámetros de ítem calibrados mejoraría la precisión de la medición.
+5. **Adaptación cultural:** aunque los ítems en español están adaptados de Cupani et al. (2019) — versión rioplatense validada en muestras universitarias argentinas — no han sido específicamente validados en el contexto colombiano con poblaciones estudiantiles rurales.
 
-## References
+## Referencias
 
-- Armstrong, P. I., Allison, W., & Rounds, J. (2020). Alternate Forms Public Domain RIASEC Markers. *Electronic Journal of Research in Educational Psychology*.
-- Holland, J. L. (1997). *Making vocational choices: A theory of vocational personalities and work environments* (3rd ed.). Psychological Assessment Resources.
-- Liao, H.-Y., Armstrong, P. I., & Rounds, J. (2008). Development and initial validation of public domain Basic Interest Markers. *Journal of Vocational Behavior*, 73(1), 159-183.
-- Nye, C. D., Su, R., Rounds, J., & Drasgow, F. (2012). Vocational interests and performance: A quantitative summary of over 60 years of research. *Perspectives on Psychological Science*, 7(4), 384-403.
-- Nye, C. D., Prasad, J., Bradburn, J., & Elizondo, F. (2020). Improving the operationalization of interest congruence using polynomial regression. *Journal of Vocational Behavior*, 118, 103370.
-- van der Linden, W. J., & Hambleton, R. K. (Eds.). (2018). *Handbook of Item Response Theory*. CRC Press.
-- SNIES, Ministerio de Educacion Nacional de Colombia. https://hecaa.mineducacion.gov.co/consultaspublicas/programas
-- International Personality Item Pool. https://ipip.ori.org/
+- Cupani, M., Moran, V. E., Azpilicueta, A. E., y Piccolo, N. V. (2019). Alternate Forms Public Domain RIASEC Markers for Interests and Self-Efficacy: Spanish version. *Electronic Journal of Research in Educational Psychology*, 17(2), 359-382. [DOI: 10.25115/ejrep.v17i48.2136](https://ojs.ual.es/ojs/index.php/EJREP/article/view/2136)
+- Holland, J. L. (1997). *Making vocational choices: A theory of vocational personalities and work environments* (3ra ed.). Psychological Assessment Resources. [archive.org](https://archive.org/details/makingvocational0000holl)
+- Liao, H.-Y., Armstrong, P. I., y Rounds, J. (2008). Development and initial validation of public domain Basic Interest Markers. *Journal of Vocational Behavior*, 73(1), 159-183. [DOI: 10.1016/j.jvb.2007.12.002](https://doi.org/10.1016/j.jvb.2007.12.002)
+- Nye, C. D., Su, R., Rounds, J., y Drasgow, F. (2012). Vocational interests and performance: A quantitative summary of over 60 years of research. *Perspectives on Psychological Science*, 7(4), 384-403. [PubMed: 26168474](https://pubmed.ncbi.nlm.nih.gov/26168474/)
+- Nye, C. D., Prasad, J., Bradburn, J., y Elizondo, F. (2018). Improving the operationalization of interest congruence using polynomial regression. *Journal of Vocational Behavior*, 104, 154-169. [DOI: 10.1016/j.jvb.2017.10.012](https://doi.org/10.1016/j.jvb.2017.10.012)
+- Hoff, K. A., Song, Q. C., Wee, C. J. M., Phan, W. M. J., y Rounds, J. (2020). Interest fit and job satisfaction: A systematic review and meta-analysis. *Journal of Vocational Behavior*, 123, 103503. [DOI: 10.1016/j.jvb.2020.103503](https://doi.org/10.1016/j.jvb.2020.103503)
+- Nye, C. D., Prasad, J., y Rounds, J. (2021). The effects of vocational interests on motivation, satisfaction, and academic performance: Test of a mediated model. *Journal of Vocational Behavior*, 127, 103583. [Elsevier](https://linkinghub.elsevier.com/retrieve/pii/S0001879121000555)
+- van der Linden, W. J., y Hambleton, R. K. (Eds.). (2018). *Handbook of Item Response Theory*. CRC Press.
+- SNIES, Ministerio de Educación Nacional de Colombia. [Buscador público de programas](https://hecaa.mineducacion.gov.co/consultaspublicas/programas)
+- International Personality Item Pool. [ipip.ori.org](https://ipip.ori.org/)

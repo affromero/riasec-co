@@ -1,8 +1,10 @@
 {
   "meta": {
     "source": "International Personality Item Pool (ipip.ori.org)",
-    "scale": "IPIP Basic Interest Markers — Spanish adaptation",
-    "reference": "Armstrong, P. I., Allison, W., & Rounds, J. (2020). Alternate Forms Public Domain RIASEC Markers. Electronic Journal of Research in Educational Psychology.",
+    "scale": "IPIP Basic Interest Markers, Spanish (Río de la Plata) adaptation",
+    "reference": "Cupani, M., Moran, V. E., Azpilicueta, A. E., & Piccolo, N. V. (2019). Alternate Forms Public Domain RIASEC Markers for Interests and Self-Efficacy: Spanish version. Electronic Journal of Research in Educational Psychology, 17(2), 359-382.",
+    "reference_doi": "10.25115/ejrep.v17i48.2136",
+    "reference_url": "https://ojs.ual.es/ojs/index.php/EJREP/article/view/2136",
     "license": "Public domain",
     "response_scale": {
       "1": "Muy impreciso",

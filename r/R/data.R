@@ -54,7 +54,9 @@
 #'   \item{keyed}{Keying direction: "+" or "-"}
 #' }
 #' @source International Personality Item Pool (\url{https://ipip.ori.org/}).
-#'   Spanish adaptation: Armstrong, Allison & Rounds (2020).
+#'   Spanish adaptation: Cupani, Moran, Azpilicueta & Piccolo (2019),
+#'   \emph{Electronic Journal of Research in Educational Psychology}, 17(2),
+#'   359-382. \url{https://ojs.ual.es/ojs/index.php/EJREP/article/view/2136}
 "items_es"
 
 #' IPIP RIASEC Items (English)
